@@ -1,0 +1,44 @@
+name: Validate posts
+
+# Builds the landing site against this branch's posts. The frontmatter schema lives only in
+# official-landing (source.config.ts), so building the real site is the check — there is no
+# second copy of the schema here to drift out of sync.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build-landing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Check out these posts
+        uses: actions/checkout@v4
+        with:
+          path: blog-posts
+
+      - name: Check out the landing site
+        uses: actions/checkout@v4
+        with:
+          repository: Arthurite-Integrated/official-landing
+          ref: main
+          path: landing
+
+      - name: Put these posts where the landing site reads them
+        run: |
+          rm -rf landing/content/blog
+          mkdir -p landing/content
+          cp -R blog-posts landing/content/blog
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install landing dependencies
+        working-directory: landing
+        run: bun install --frozen-lockfile
+
+      - name: Build the landing site
+        working-directory: landing
+        run: bun run build

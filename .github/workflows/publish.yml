@@ -1,0 +1,37 @@
+name: Publish to landing
+
+# Sends the merged commit to official-landing, whose "Update blog content" workflow points its
+# content/blog submodule at exactly this sha. The sha is required: landing rejects a dispatch without it.
+on:
+  push:
+    branches: [main]
+    paths: ["posts/**", "images/**"]
+
+concurrency:
+  group: publish-to-landing
+  cancel-in-progress: false
+
+jobs:
+  notify-landing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Ask official-landing to publish this commit
+        env:
+          LANDING_DISPATCH_TOKEN: ${{ secrets.LANDING_DISPATCH_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${LANDING_DISPATCH_TOKEN}" ]; then
+            echo "::error::LANDING_DISPATCH_TOKEN is not set — see README.md, One-time setup."
+            exit 1
+          fi
+
+          curl -sS --fail-with-body -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${LANDING_DISPATCH_TOKEN}" \
+            https://api.github.com/repos/Arthurite-Integrated/official-landing/dispatches \
+            -d "{\"event_type\":\"blog-content-updated\",\"client_payload\":{\"sha\":\"${GITHUB_SHA}\"}}"
+
+          echo "Asked official-landing to publish ${GITHUB_SHA}"

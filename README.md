@@ -9,11 +9,12 @@ site's own navigation bar and footer.
 ## Layout
 
 ```
-posts/<slug>.mdx   one file per post — the filename is the URL
-images/            cover images and images used inside posts
+posts/<slug>.mdx                 one file per post — the filename is the URL
+posts/YYYY/MM/DD/<slug>.mdx      same, filed by publish date
+images/                          cover images and images used inside posts
 ```
 
-`posts/planning-an-aws-migration.mdx` is served at `/blog/planning-an-aws-migration`.
+`posts/planning-an-aws-migration.mdx` and `posts/2026/09/14/planning-an-aws-migration.mdx` are both served at `/blog/planning-an-aws-migration`.
 
 ## How a post goes live
 

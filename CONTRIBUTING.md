@@ -2,7 +2,7 @@
 
 ## 1. Create the file
 
-Add one file per post to `posts/`. The filename becomes the URL, so it must be:
+Add one file per post to `posts/` or `posts/YYYY/MM/DD/`. The filename becomes the URL, so it must be:
 
 - lowercase words separated by hyphens — `planning-an-aws-migration.mdx`, not `Planning AWS Migration.mdx`
 - permanent — renaming a published post changes its URL and breaks every link to it

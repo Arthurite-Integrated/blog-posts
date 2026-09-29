@@ -1,0 +1,42 @@
+---
+title: "Achieving ISO 45001 Compliance: How Zeroincidencecrew Secured Sensitive Data on AWS"
+excerpt: "In the safety consulting industry, trust is everything. When Zeroincidencecrew, a Nigerian workplace safety consultancy, realized their on-premises infrastructure couldn't meet modern security requirements, they faced a …"
+date: 2026-02-08
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+***Arthurite Integrated SMB Competency***
+
+In the safety consulting industry, trust is everything. When Zeroincidencecrew, a Nigerian workplace safety consultancy, realized their on-premises infrastructure couldn't meet modern security requirements, they faced a crisis: several high-value contracts worth $500K were stalled due to inadequate security documentation.
+
+**The Challenge**
+
+Handling sensitive incident reports for manufacturing, construction, and oil & gas clients, Zeroincidencecrew stored critical data on local servers with no encryption, limited access controls, and zero audit trails. This created enormous liability exposure and prevented them from pursuing enterprise contracts requiring ISO 45001 and ISO 27001 compliance. Their manual systems couldn't demonstrate the security posture modern clients demanded.
+
+**The Solution**
+
+Arthurite Integrated implemented a security-first AWS architecture in the af-south-1 (Cape Town) region to ensure African data residency and NDPR/POPIA compliance. The solution centered on defense-in-depth principles with multiple security layers.
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/02/image-1-893x1024.png)
+
+At the foundation, all data was encrypted at rest using AWS KMS customer-managed keys with automatic rotation, and in transit using TLS 1.3. Amazon RDS PostgreSQL with Multi-AZ deployment stored incident data with built-in encryption, while Amazon S3 with server-side encryption housed documents and evidence files.
+
+Comprehensive monitoring was achieved through AWS GuardDuty for intelligent threat detection, AWS CloudTrail for complete audit logging, AWS Config for continuous compliance monitoring, and AWS Security Hub aggregating all security findings. The architecture deployed applications in private subnets with no internet access, using VPC endpoints for S3 connectivity to keep data entirely within the AWS network.
+
+**The Results**
+
+The impact was immediate and substantial. Zeroincidencecrew's security compliance score jumped from 45% to 98% against ISO 45001 requirements, enabling successful certification audits. Within four months, they unlocked $485K in previously stalled contracts. Audit response time for client security inquiries plummeted from 5 days to 2 hours, as CloudTrail and Config provided instant evidence generation. Customer satisfaction among security-conscious clients rose from 71% to 94%.
+
+The monthly AWS cost of approximately $1,800 was 60% lower than third-party compliance platforms at $4,500+, while providing superior capabilities and eliminating vendor dependencies.
+
+**Key Takeaways for SMBs**
+
+Zeroincidencecrew's transformation shows that enterprise-grade security is achievable for SMBs:
+
+- Cloud security services level the playing field against larger competitors
+- Compliance becomes a competitive advantage, not a barrier
+- African data residency requirements can be met cost-effectively
+- Automated security monitoring reduces operational burden
+
+For professional services firms handling sensitive data, AWS security services provide bank-level protection at SMB pricing, turning compliance from a cost center into a revenue enabler.

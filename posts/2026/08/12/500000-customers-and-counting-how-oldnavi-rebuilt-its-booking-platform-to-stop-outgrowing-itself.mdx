@@ -1,0 +1,45 @@
+---
+title: "500,000 Customers and Counting: How Oldnavi Rebuilt Its Booking Platform to Stop Outgrowing Itself"
+excerpt: "There's a specific kind of problem that only shows up once you're successful: the infrastructure that got you here is the same infrastructure now holding you back. Oldnavi, a retail, marketplace, and logistics platform w…"
+date: 2026-08-12
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+There's a specific kind of problem that only shows up once you're successful: the infrastructure that got you here is the same infrastructure now holding you back. Oldnavi, a retail, marketplace, and logistics platform with a customer base pushing half a million, knew that problem well.
+
+## **Success Outpacing the System Behind It**
+
+Oldnavi's booking and dispatch platform was doing real volume — the kind of scale, somewhere in the neighborhood of 350,000 to 500,000 customers, that most booking platforms never reach. But infrastructure built for a smaller business doesn't just quietly keep up as the business grows past it. It shows strain in exactly the ways that matter most: operational visibility gets harder to maintain, dispatch complexity climbs, and the gap between "what the platform can handle" and "what the business actually needs" starts to widen.
+
+Oldnavi wasn't chasing a rebuild for its own sake. It needed infrastructure that matched where the business actually was — and, just as importantly, wanted to bring real intelligence into the customer and operations experience, not bolt AI on as an afterthought once the core platform was stable.
+
+## **Rebuilding for Scale, With Intelligence Built In From Day One**
+
+Oldnavi brought in Arthurite Integrated for a full migration and modernization engagement with four explicit goals: move critical workloads to AWS, modernize the platform for real scalability and resilience, build infrastructure that could handle not just today's volume but tomorrow's, and introduce AI-enabled capabilities as a core part of the platform, not a future add-on.
+
+The architecture that came out of it deliberately avoids a serverless-only approach. Amazon EC2, running within a highly available, multi-Availability-Zone VPC, gives Oldnavi the kind of control and predictability a high-volume transactional platform actually needs — backed by Amazon RDS for PostgreSQL in Multi-AZ, Amazon API Gateway for managed API access, and a full security and monitoring stack running CloudWatch, KMS, Secrets Manager, IAM, CloudTrail, and Config underneath it all.
+
+The layout reflects that philosophy directly: a persistent, highly available compute tier at the core, a dedicated AI orchestration layer kept deliberately separate from the production database, and every AI-driven action routed through controlled, authorized application APIs rather than direct data access.
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/08/image-2-1000x1024.png)
+
+The part that sets this build apart is Amazon Bedrock. Rather than treating AI as a chatbot layered awkwardly on top, Oldnavi's platform uses it to power genuinely agentic booking assistance — a customer describes what they need, the AI interprets the request, checks real availability through the platform's own authorized APIs, and completes the booking, start to finish, without ever touching the production database directly. Every AI-driven action runs through a controlled orchestration layer, so the intelligence layer never gets to move faster than the guardrails around it.
+
+## **What Changed**
+
+Oldnavi's modernized platform has been live in production since November 2025, running the business's full retail, marketplace, logistics, booking, and dispatch operations at its target scale:
+
+- **A reference architecture engineered for 350,000 to 500,000 customers**, with real headroom for what comes next rather than a ceiling the business will hit again in eighteen months
+- **A CI/CD pipeline with automated testing, release approval, and rollback** built in from the start, not retrofitted after something broke
+- **AI-specific validation built into the launch process itself** — guardrail checks and tool authorization treated with the same seriousness as core technical and business sign-off, not an afterthought bolted onto the checklist
+
+## **Infrastructure That Won't Need Outgrowing Again**
+
+The measure of success here isn't a single dramatic before-and-after number — it's that Oldnavi no longer has to choose between growing the business and trusting the platform underneath it. With infrastructure-as-code, automated deployment, and an AI layer designed for controlled expansion, the foundation is built to take on what's next — dispatch optimization, predictive demand forecasting, deeper AI-driven recommendations — without requiring another ground-up rebuild the next time the business crosses a growth milestone.
+
+"We didn't want AI bolted on as a gimmick. We wanted it built into the platform the same way the database and the load balancer are — as core infrastructure. That's exactly what we got," says the Technology Lead at Oldnavi.
+
+---
+
+*Oldnavi's platform was designed and delivered by Arthurite Integrated on AWS. To learn how a modernized, AI-enabled AWS architecture could help your business scale with confidence, get in touch.*

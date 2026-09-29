@@ -1,0 +1,40 @@
+---
+title: "How Jerkin Services Eliminated Downtime and Scaled Operations with AWS Cloud Migration"
+excerpt: "Jerkin Services, a Lagos-based cleaning and facilities management company, faced a critical challenge common to growing SMBs: their infrastructure couldn't keep pace with business growth. Manual scheduling, paper-based o…"
+date: 2026-02-07
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+***Arthurite Integrated SMB Competency***
+
+Jerkin Services, a Lagos-based cleaning and facilities management company, faced a critical challenge common to growing SMBs: their infrastructure couldn't keep pace with business growth. Manual scheduling, paper-based operations, and unreliable on-premises servers were causing significant operational friction and revenue loss.
+
+**The Challenge**
+
+Operating across commercial offices and retail properties in Lagos, Jerkin Services struggled with frequent system failures that caused over 20 hours of downtime monthly. Their paper-based scheduling led to double bookings and customer dissatisfaction, while their failing local server threatened business continuity. With competitors offering digital booking experiences, Jerkin Services risked losing market share if they couldn't modernize quickly.
+
+**The Solution**
+
+Arthurite Integrated designed a cost-optimized AWS architecture that balanced high availability with SMB budget constraints. The solution leveraged Amazon EC2 instances behind an Application Load Balancer for the booking application, Amazon RDS MySQL with Multi-AZ deployment for data resilience, and Amazon S3 for document storage. AWS Lambda functions automated customer notifications via SMS and email, while CloudWatch provided comprehensive monitoring with auto-recovery capabilities.
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/02/image-771x1024.png)
+
+The multi-AZ architecture ensured that even if one availability zone failed, services would continue running. The RDS Multi-AZ deployment provided automatic failover within 60 seconds, while the Application Load Balancer continuously monitored instance health and routed traffic only to healthy servers.
+
+**The Results**
+
+The transformation was dramatic. System uptime improved from 92% to 99.95%, eliminating the $8,000 monthly revenue loss from outages. Administrative efficiency improved by 79%, reducing scheduling time from 12 hours to 2.5 hours weekly. This freed staff to focus on customer service, enabling 35% client growth without additional administrative hires. Customer satisfaction scores jumped from 78% to 93% as booking reliability improved.
+
+The AWS infrastructure cost approximately $1,250 monthly—significantly less than maintaining aging on-premises equipment while providing enterprise-grade reliability. Jerkin Services can now scale horizontally by adding EC2 instances as demand grows, with S3 automatically handling increasing document storage needs.
+
+**Key Takeaways for SMBs**
+
+Jerkin Services' success demonstrates that cloud migration isn't just for large enterprises. With the right architecture partner, SMBs can achieve:
+
+- Enterprise-level reliability at manageable costs
+- Dramatic operational efficiency improvements
+- Foundation for sustainable growth
+- Elimination of infrastructure management burden
+
+For facilities management companies struggling with aging infrastructure, Jerkin Services proves that AWS cloud migration delivers measurable ROI through improved uptime, reduced administrative overhead, and enhanced customer experience.

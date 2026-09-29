@@ -1,0 +1,385 @@
+---
+title: "The Hacker Knocked. AWS Didn’t Open the Door."
+excerpt: "By Adekunle Kehinde: Web Engineer (Arthurite Integrated)"
+date: 2026-09-09
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+By Adekunle Kehinde: Web Engineer (Arthurite Integrated)
+
+It’s 2:13 AM.
+
+Your office is empty. Your employees are asleep. Your customers are still browsing your website, placing orders, logging into their accounts, and going about their business.
+
+Somewhere else, someone else is awake too.
+
+Except they aren't trying to buy anything.
+
+Thousands of suspicious requests suddenly begin hitting your website.
+
+At first, they look like ordinary traffic. Then the volume starts climbing.
+
+10,000 requests.
+
+50,000.
+
+100,000.
+
+Some are simply trying to overwhelm the application. Others are probing URLs, looking for vulnerabilities and trying requests your legitimate customers would never make.
+
+To the attacker, your website is a target.
+
+To your customers?
+
+Hopefully, nothing has changed.
+
+Their pages are still loading. Orders are still being processed. And behind the scenes, multiple layers of security are already at work.
+
+Welcome to what could happen when someone knocks on the door of a properly secured AWS environment.
+
+## 2:13 AM — The Traffic Arrives
+
+Every website expects traffic.
+
+The problem is that not every visitor arrives with good intentions.
+
+An attacker might attempt to flood an application with enormous amounts of traffic, hoping to exhaust the infrastructure until legitimate customers can no longer access it.
+
+This is known as a **Distributed Denial of Service (DDoS) attack**.
+
+Imagine hundreds of people deliberately crowding the entrance of a supermarket. They aren't there to buy anything. Their only objective is to make it impossible for real customers to enter.
+
+The digital version can involve huge numbers of requests coming from many different sources.
+
+This is where **AWS Shield** becomes part of the defence.
+
+AWS Shield provides managed DDoS protection for applications running on AWS. AWS Shield Standard is automatically included for AWS customers and helps protect against common network and transport-layer DDoS attacks.
+
+For organisations with greater requirements, AWS Shield Advanced provides additional detection, mitigation, visibility, and response capabilities.
+
+The attacker has knocked.
+
+But getting traffic to your infrastructure doesn't automatically mean getting access to your application.
+
+## 2:14 AM — Someone Starts Checking IDs
+
+The attack changes.
+
+Instead of relying only on overwhelming traffic, suspicious requests begin targeting the application itself.
+
+Maybe someone repeatedly attempts unusual URLs.
+
+Maybe automated bots are probing the website.
+
+Maybe requests contain patterns commonly associated with attacks such as SQL injection or cross-site scripting.
+
+This is where **AWS Web Application Firewall (AWS WAF)** can become another layer of defence.
+
+Think of WAF as a security officer standing at the entrance to your web application.
+
+Instead of simply asking:
+
+*"Is someone trying to connect?"*
+
+it can examine characteristics of incoming web requests and apply rules that determine which requests should be allowed, blocked, counted, or challenged.
+
+Rules can be created around IP addresses, geographic origins, request patterns, rate limits, and known malicious behaviour. AWS also provides managed rule groups that can help protect applications against common web exploits.
+
+The important concept here is **layered security**.
+
+Shield and WAF aren't doing exactly the same job.
+
+One helps protect against certain DDoS attacks.
+
+The other helps control which web requests are allowed to reach the application.
+
+The attacker has made it to the gate.
+
+The gate isn't opening so easily.
+
+## 2:16 AM — Something Doesn't Look Right
+
+Security isn't only about blocking what you already know is bad.
+
+Sometimes you need to recognise behaviour that simply looks unusual.
+
+Perhaps credentials are suddenly being used in an unexpected way.
+
+Maybe unusual API activity begins appearing.
+
+Maybe infrastructure starts communicating with destinations it normally wouldn't.
+
+This is where **Amazon GuardDuty** enters the picture.
+
+GuardDuty continuously analyses supported AWS data sources and uses threat intelligence and detection techniques to identify potentially malicious or unauthorised activity within an AWS environment.
+
+Instead of your team manually staring at millions of events hoping to notice something suspicious, GuardDuty can surface security findings that deserve investigation.
+
+This matters because attacks don't always look dramatic.
+
+Sometimes there isn't a giant red warning saying:
+
+**“YOU ARE BEING HACKED.”**
+
+The clue might simply be one unusual activity buried among thousands of legitimate ones.
+
+Good security is partly about finding that signal among all the noise.
+
+## 2:18 AM — The Alarm Goes Off
+
+By now, your security architecture may be doing its job.
+
+But somebody still needs visibility into what is happening.
+
+That's where **Amazon CloudWatch** becomes useful.
+
+CloudWatch provides monitoring and observability capabilities across AWS resources and applications. Teams can collect metrics and logs, create dashboards, and configure alarms when defined thresholds or conditions are reached.
+
+Perhaps request volume suddenly increases.
+
+Maybe application error rates begin climbing.
+
+Maybe a resource reaches an unusual utilisation level.
+
+Rather than waiting for customers to complain the next morning, monitoring can help teams identify abnormal behaviour while it is happening.
+
+And alerts can become the beginning of a wider response workflow.
+
+Depending on the architecture, an event could trigger notifications or automated actions using other AWS services.
+
+The important difference is simple:
+
+Without monitoring, you might discover an incident because a customer calls you.
+
+With monitoring, **your infrastructure can tell you something is wrong first.**
+
+## 2:20 AM — But What Actually Happened?
+
+Imagine the attack stops.
+
+Traffic returns to normal.
+
+Your website is still running.
+
+Great.
+
+But the job isn't finished.
+
+Your security team now needs answers.
+
+What happened?
+
+Which resources were affected?
+
+Were any AWS configurations changed?
+
+Did someone perform an unexpected API action?
+
+Which identity made the request?
+
+When did it happen?
+
+For that investigation, **AWS CloudTrail** provides another crucial piece of the puzzle.
+
+CloudTrail records AWS account activity and API actions, providing an event history that can support security analysis, governance, auditing, and troubleshooting.
+
+Think of it like security-camera footage for activity within your AWS environment.
+
+Blocking an attacker is important.
+
+Understanding what happened is equally important.
+
+Because every security incident should make your next defence stronger.
+
+## 2:30 AM — Your Customer Is Still Shopping
+
+Here's the part customers care about.
+
+They don't know any of this happened.
+
+Someone opened your website at 2:15 AM.
+
+They searched for a product.
+
+Added it to their cart.
+
+Paid.
+
+Received confirmation.
+
+And went to bed.
+
+They didn't see GuardDuty findings.
+
+They didn't see CloudWatch metrics.
+
+They didn't know WAF rules were evaluating requests.
+
+They didn't know your security team had an audit trail available through CloudTrail.
+
+They simply experienced a website that worked.
+
+And that's the point.
+
+**Great cloud security should protect the business without making legitimate customers fight through the infrastructure behind it.**
+
+## One Service Isn't the Hero
+
+It would be tempting to finish the story by saying:
+
+*"AWS Shield stopped the hacker."*
+
+But real cloud security is more complicated than that.
+
+There isn't one magical security service capable of protecting every application against every threat.
+
+AWS itself describes cloud security through a **shared responsibility model**. AWS is responsible for security **of** the cloud, while customers remain responsible for aspects of security **in** the cloud depending on the services they use.
+
+That means businesses still need to configure their environments correctly.
+
+Identity permissions matter.
+
+Network architecture matters.
+
+Encryption matters.
+
+Software vulnerabilities matter.
+
+Application code matters.
+
+Backups matter.
+
+Monitoring matters.
+
+Employee security awareness matters.
+
+The strength comes from putting multiple controls together.
+
+Shield can contribute DDoS protection.
+
+WAF can filter malicious web requests.
+
+GuardDuty can identify suspicious activity.
+
+CloudWatch can provide operational visibility and alarms.
+
+CloudTrail can provide an audit history.
+
+IAM can help ensure identities receive only the permissions they require.
+
+Encryption can help protect sensitive data.
+
+Backups and disaster recovery can help the business recover when prevention isn't enough.
+
+**Security isn't one wall. It's layers of walls.**
+
+## What If You're “Just” a Small Business?
+
+This is where many SMBs make a dangerous assumption:
+
+> *“Why would anyone attack us? We're not a bank.”*
+
+Attackers don't necessarily care how famous your company is.
+
+Automated bots continuously scan the internet looking for exposed applications, weak credentials, vulnerable software, misconfigured services, and other opportunities.
+
+A small e-commerce store still handles customer information.
+
+A growing startup still has credentials worth stealing.
+
+A professional-services firm still has confidential documents.
+
+A small business can still suffer downtime.
+
+And when you're smaller, the financial impact of recovering from a serious incident can be even harder to absorb.
+
+Cloud security therefore shouldn't begin when your business becomes huge.
+
+It should grow **with the business**.
+
+## Security Shouldn't Stop You From Growing
+
+There is another side to this conversation.
+
+Security shouldn't make innovation impossible.
+
+You shouldn't have to choose between:
+
+**“Move fast”**
+
+and
+
+**“Stay secure.”**
+
+A properly designed cloud environment aims to make security part of the architecture from the beginning.
+
+As your application grows, security controls can grow with it.
+
+As traffic increases, your protection strategy can evolve.
+
+As employees join, identity policies can be designed around their responsibilities.
+
+As applications become more complex, monitoring and detection can become more sophisticated.
+
+This is one of the reasons cloud architecture matters.
+
+The question isn't simply:
+
+**“Where should we host our website?”**
+
+It's:
+
+**“How do we build an environment that can remain secure, available, observable, and scalable as our business grows?”**
+
+## Where Arthurite Integrated Comes In
+
+Most business owners shouldn't need to become cybersecurity engineers just to run an online business.
+
+That's where having the right technology partner matters.
+
+At **Arthurite Integrated**, we help businesses design, deploy, and manage AWS cloud environments with security built into the architecture rather than treated as an afterthought.
+
+For an SMB, that might mean securing a business website or e-commerce platform, improving identity and access controls, configuring backups, protecting web applications, and implementing monitoring and alerts.
+
+For growing organisations, it could mean reviewing AWS architecture, implementing AWS WAF rules, strengthening IAM policies, centralising logs, improving threat detection, designing disaster recovery strategies, and establishing better visibility across cloud workloads.
+
+And for organisations operating more complex environments, the conversation can extend into resilient architecture, automated security controls, governance, compliance requirements, incident response, and continuous cloud optimisation.
+
+The objective isn't to deploy every AWS security service simply because it exists.
+
+**It's to understand your business, identify what needs protecting, assess the risks, and build the right layers around it.**
+
+Whether you're running your first online store or operating a platform serving thousands of customers, your security architecture should match both your risks today and your ambitions for tomorrow.
+
+## The Hacker Will Knock Again
+
+The internet never closes.
+
+Neither do automated attacks.
+
+Somewhere, another bot is scanning.
+
+Another credential is being tested.
+
+Another vulnerability is being searched for.
+
+Another flood of malicious traffic may eventually arrive.
+
+The goal isn't to pretend attacks can never happen.
+
+The goal is to build systems capable of **preventing what can be prevented, detecting what gets through, responding quickly when something goes wrong, and recovering when necessary.**
+
+At 2:13 AM, the hacker knocked.
+
+Your customers kept shopping.
+
+Your application kept running.
+
+Your monitoring kept watching.
+
+And your security controls kept doing their jobs.
+
+Because in the cloud, the best security incident isn't necessarily the one where nobody tried to attack you.
+
+**It's the one your customers never had to know happened.**

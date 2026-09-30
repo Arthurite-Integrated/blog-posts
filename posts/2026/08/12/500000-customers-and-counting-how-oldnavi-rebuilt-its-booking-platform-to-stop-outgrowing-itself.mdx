@@ -4,6 +4,7 @@ excerpt: "There's a specific kind of problem that only shows up once you're succ
 date: 2026-08-12
 author: "Arthurite Integrated"
 category: "Cloud"
+cover: 500000-customers-and-counting-how-oldnavi-rebuilt-its-booking-platform-to-stop-outgrowing-itself-cover.png
 featured: false
 ---
 There's a specific kind of problem that only shows up once you're successful: the infrastructure that got you here is the same infrastructure now holding you back. Oldnavi, a retail, marketplace, and logistics platform with a customer base pushing half a million, knew that problem well.
@@ -22,7 +23,7 @@ The architecture that came out of it deliberately avoids a serverless-only appro
 
 The layout reflects that philosophy directly: a persistent, highly available compute tier at the core, a dedicated AI orchestration layer kept deliberately separate from the production database, and every AI-driven action routed through controlled, authorized application APIs rather than direct data access.
 
-![](https://arthuriteintegrated.com/wp-content/uploads/2026/08/image-2-1000x1024.png)
+![](../../../../images/image-2-1000x1024-19c680bc.png)
 
 The part that sets this build apart is Amazon Bedrock. Rather than treating AI as a chatbot layered awkwardly on top, Oldnavi's platform uses it to power genuinely agentic booking assistance — a customer describes what they need, the AI interprets the request, checks real availability through the platform's own authorized APIs, and completes the booking, start to finish, without ever touching the production database directly. Every AI-driven action runs through a controlled orchestration layer, so the intelligence layer never gets to move faster than the guardrails around it.
 

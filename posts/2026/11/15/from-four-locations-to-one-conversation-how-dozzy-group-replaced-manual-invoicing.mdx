@@ -1,0 +1,123 @@
+---
+title: "From Four Locations to One Conversation: How Dozzy Group Replaced Manual Invoicing"
+excerpt: "An industrial conglomerate does not fail because it lacks demand. It fails because the administrative machinery between the customer and the order cannot keep up with the demand it already has."
+date: 2026-11-15
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+An industrial conglomerate does not fail because it lacks demand. It fails because the administrative machinery between the customer and the order cannot keep up with the demand it already has.
+
+Dozzy Group has grown since 1982 from a trading firm into one of Nigeria’s most prominent indigenous industrial enterprises. Its portfolio now spans Powerflo lubricants, industrial gases, specialised petroleum products, and fast-moving consumer goods. That breadth is commercially powerful, and it created a service problem that no amount of staffing could solve.
+
+**The Problem: A Portfolio Too Wide for Any Single Desk**
+
+When a customer’s order might be five drums of automotive lubricant, a cylinder of medical oxygen, or a pallet of biscuits, the person answering the phone cannot be an expert in all three.
+
+In Dozzy’s case, that produced a predictable pattern:
+
+- **Category handoffs:** Customers navigating between product lines were transferred, re-asked the same questions, and given answers that varied by who picked up the call.
+- **Geographic inconsistency:** With operations across four major locations, the quality of a customer’s experience depended on which site they happened to reach.
+- **Manual order entry:** Orders were captured by hand, which introduced delay and transcription error before the order had even entered the system.
+- **Manual invoicing:** Generating and delivering an invoice was an administrative task in itself, consuming staff time on every single order.
+- **Business-hours ceiling:** Industrial clients ordering for overnight operations were constrained by a support window that closed in the evening.
+
+The cost was not one dramatic failure. It was a thousand small frictions, repeated every day, across every product line.
+
+**The Solution: A Conversational Order-to-Invoice Pipeline**
+
+Dozzy Group worked with our team to replace the manual path with an automated one, built on AWS serverless services.
+
+The design separates three jobs that were previously tangled together in a single human process: **understanding the order, validating it, and producing the invoice.**
+
+**1. Understanding the Request**
+
+Amazon Lex V2 handles the deterministic parts of the conversation—the intents and slots that must be captured exactly.
+
+Product category, quantity, pricing basis, and delivery details are structured entities, and structured entities deserve a structured engine rather than a probabilistic guess.
+
+For the open-ended questions that sit between those intents—questions about viscosity grades, gas specifications, and availability—Amazon Bedrock generates grounded responses from Dozzy Group’s authoritative product documentation, so answers are retrieved rather than invented.
+
+**2. Validating the Order**
+
+Fulfilment runs on AWS Lambda.
+
+Before any document is produced, quantities and prices are checked against the product catalogue.
+
+This is the part that matters most, and it is the part most often skipped: an invoice generator that formats a document without validating its contents simply produces wrong invoices faster.
+
+**3. Producing the Invoice**
+
+A dedicated Lambda function renders the invoice as a PDF using ReportLab, writes it to Amazon S3, and returns a time-limited download link.
+
+The customer receives a document that expires in 24 hours.
+
+Nothing is emailed as an attachment, nothing is left in a public location, and nothing containing customer pricing sits at a permanent URL.
+
+**Manual Process vs. Automated Pipeline**
+
+| **Capability** | **Manual Process** | **Automated Pipeline** |
+| --- | --- | --- |
+| Order capture | Re-keyed by hand per location | Structured intents with slot validation |
+| Price and quantity check | Manual against catalogue | Validated before document generation |
+| Invoice creation | Administrative task per order | Rendered automatically on order completion |
+| Invoice delivery | Manual send | 24-hour expiring download link |
+| Invoice retention | Local or email archive | Versioned S3 archive |
+| Support window | Business hours | Continuous |
+
+**The Architecture: Serverless by Design**
+
+The workload runs entirely on managed and serverless services, which was a deliberate economic choice.
+
+Industrial ordering is bursty—a distributor may place nothing for two days, then twenty orders in an hour. Paying for idle capacity to cover the peak is the wrong trade.
+
+The architecture brings together the following AWS services:
+
+- **Amazon CloudFront:** Serves the conversational front end.
+- **Amazon Lex V2:** Provides intent recognition and slot capture.
+- **Amazon Bedrock:** Grounds open-ended product questions in curated documentation.
+- **AWS Lambda:** Handles fulfilment and invoice generation, scaling per request.
+- **Amazon S3:** Stores the invoice archive and product imagery, with access restricted.
+- **Amazon Cognito:** Handles identity for front-end and staff access.
+- **Amazon CloudWatch:** Monitors error rates and invoice generation latency through alarms and a dedicated operational dashboard.
+- **AWS WAF:** Protects the public edge with managed rule groups and a per-IP rate limit.
+- **AWS KMS:** Supplies a customer-managed key, with rotation enabled, backing bucket-level encryption on every object.
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/11/Oldnavi-AWS-Reference-Architecture-1-1000x1024.png)
+
+*Suggested architecture flow: CloudFront → Lex V2 → Lambda fulfilment → Catalogue validation → Invoice generator → S3 archive → Expiring download link, with Bedrock knowledge grounding and CloudWatch, WAF, and KMS security controls.*
+
+**What Has Been Delivered**
+
+This is an early deployment, and we will state its position plainly rather than dress it up.
+
+What exists and works today:
+
+- A working conversational ordering path across four product categories with different questioning behaviour.
+- Automated invoice generation and delivery: a PDF produced, archived, and issued as a 24-hour expiring link without human involvement.
+- Catalogue validation before document generation, so a malformed price or quantity cannot become a customer-facing invoice.
+- A hardened, monitored estate: WAF at the edge, a customer-managed encryption key, public access fully blocked on every bucket, five CloudWatch alarms and an operational dashboard, and a written runbook and release gate.
+
+What does not exist yet is volume.
+
+The pipeline has been proven, not stressed. We are not going to publish a containment percentage or a recovery figure for a deployment that has not yet carried real customer orders at scale, because those numbers would be invented, and invented numbers have a way of meeting their customers eventually.
+
+**The Lesson Worth Taking**
+
+Dozzy Group’s engagement reinforced something we now treat as a delivery rule rather than a technique:
+
+**The quality of an AI system’s output is bounded by the quality of the data it reasons over.**
+
+In the early build, product naming and category inconsistencies in the catalogue surfaced directly in customer-facing invoices, with internal category values appearing on a document a client would read.
+
+The model was not wrong. The catalogue was.
+
+Catalogue curation is therefore treated as a delivery dependency in our engagements, upstream of any AI work, not as an afterthought once the model is “working.”
+
+That is a less glamorous finding than an automation statistic, and considerably more useful to the next customer who reads this.
+
+**Ready to Replace Manual Processes with Intelligent Automation?**
+
+Ready to remove the manual friction between your customers and your orders?
+
+Talk to the **Arthurite Integrated** team about conversational ordering and document automation on AWS.

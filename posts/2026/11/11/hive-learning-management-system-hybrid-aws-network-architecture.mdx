@@ -1,0 +1,441 @@
+---
+title: "How Arthurite Integrated Designed a Multi-Account AWS Network for the Hive Learning Management System"
+excerpt: "The growth of digital education has transformed how students access learning materials, interact with teachers and monitor their academic progress. Modern Learning Management Systems (LMS) must support more than online c…"
+date: 2026-11-11
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**By: Dauda Lawal – Web Developer**
+
+## **Introduction**
+
+The growth of digital education has transformed how students access learning materials, interact with teachers and monitor their academic progress. Modern Learning Management Systems (LMS) must support more than online course delivery. They require reliable infrastructure, secure access to learning resources, efficient application communication and the flexibility to scale as user demands increase.
+
+Hive is an online Learning Management System designed to support students and teachers through digital learning experiences. Students can take courses online and monitor their learning progress, while teachers can publish courses, manage learning activities and track student performance.
+
+To support the platform, Arthurite Integrated built and deployed Hive on Amazon Web Services (AWS), designing a network environment distributed across three Virtual Private Clouds (VPCs) in two AWS accounts.
+
+As part of the infrastructure architecture, Arthurite developed a hybrid connectivity design that enables the AWS environment to communicate privately with the customer's existing on-premises network.
+
+The proposed architecture combines AWS Site-to-Site VPN, Amazon VPC, Application Load Balancing, controlled inter-VPC connectivity and AWS-native monitoring services.
+
+By separating the web, application and data layers into dedicated network environments, the design establishes clear security boundaries while allowing approved services to communicate.
+
+This approach provides a foundation for operating a modern online learning platform with secure hybrid connectivity, controlled network access and improved infrastructure visibility.
+
+## **The Challenge: Securing a Distributed Learning Management System**
+
+Operating an online learning platform across multiple AWS accounts introduces important infrastructure considerations. Students and teachers need reliable access to the platform, application services must communicate securely, and sensitive information must remain protected.
+
+For Hive, the architecture needed to support three distinct network environments while maintaining secure connectivity to the customer's on-premises infrastructure.
+
+Several requirements shaped Arthurite's network design.
+
+### **1. Separating the Learning Platform into Independent Network Layers**
+
+A modern LMS typically consists of multiple application components, including user-facing services, application processing and data storage.
+
+Placing all these components within a single network environment can make security management and access control more difficult.
+
+Hive required a network architecture that separated its web, application and data layers across three VPCs distributed between two AWS accounts.
+
+This separation was intended to provide independent network boundaries for each infrastructure layer while allowing approved communication between them.
+
+### **2. Establishing Secure Connectivity to On-Premises Infrastructure**
+
+The Hive platform also required private connectivity to the customer's existing on-premises network.
+
+This hybrid connectivity was important because certain services or resources within the existing infrastructure needed to communicate with the AWS-hosted learning platform.
+
+However, connecting an on-premises network to AWS introduces security considerations.
+
+The customer needed to ensure that its internal systems could access only the services required for their operations without gaining unrestricted access to the entire cloud environment.
+
+Arthurite therefore incorporated AWS Site-to-Site VPN into the proposed architecture to establish encrypted communication between the two environments.
+
+### **3. Controlling Communication Between Multiple VPCs**
+
+With three VPCs distributed across two AWS accounts, the platform required a structured approach to inter-VPC communication.
+
+The architecture needed to ensure that the web tier could access the necessary application services, application services could reach approved data resources, and the on-premises environment could communicate only with designated services.
+
+This required carefully designed route tables, network segmentation and security rules.
+
+The specific inter-VPC connectivity mechanism, whether AWS Transit Gateway, VPC peering or AWS PrivateLink, was left for confirmation in the project documentation.
+
+### **4. Maintaining Reliable Access for Students and Teachers**
+
+An online learning platform must provide dependable access to students and teachers.
+
+Service interruptions can affect course participation, teaching activities and the ability of students to access learning resources.
+
+Hive therefore required a highly available application entry point distributed across at least two AWS Availability Zones.
+
+Arthurite incorporated an Application Load Balancer into the proposed architecture to distribute incoming application requests and support the availability of the user-facing environment.
+
+### **5. Protecting Sensitive Data and Network Traffic**
+
+Learning platforms handle information relating to students, teachers, courses and academic progress.
+
+The infrastructure must therefore apply appropriate security controls to protect data and prevent unauthorized network access.
+
+The architecture required encrypted hybrid connectivity, restricted network routes, security groups, network ACLs and private application and data tiers.
+
+It also needed network traffic logging and monitoring to provide visibility into infrastructure activity.
+
+These requirements established the foundation for Arthurite's hybrid multi-account network design.
+
+## **The Solution: Designing a Hybrid Multi-Account AWS Network Architecture**
+
+Arthurite Integrated designed a three-VPC architecture distributed across two AWS accounts to support the Hive Learning Management System.
+
+Each VPC serves a specific responsibility within the platform.
+
+The first VPC provides the web-facing environment and hosts the Application Load Balancer, which acts as the entry point for students and teachers.
+
+The second VPC supports application services responsible for processing platform requests and coordinating learning activities.
+
+The third VPC provides the data services environment and is also identified as a potential location for the on-premises connectivity attachment, subject to final architecture confirmation.
+
+To connect these environments, the design incorporates an inter-VPC connectivity mechanism that must be confirmed against the final as-built architecture.
+
+For hybrid connectivity, AWS Site-to-Site VPN establishes an encrypted IPsec connection between the customer's on-premises network and the AWS environment.
+
+Route tables determine which network ranges and services can communicate, while security groups and network ACLs provide additional traffic restrictions.
+
+The architecture also incorporates VPC endpoints to provide private access to supported AWS services.
+
+Amazon CloudWatch, VPC Flow Logs and AWS CloudTrail provide monitoring and auditing capabilities across the participating AWS environments.
+
+Together, these components establish a structured network architecture designed to support secure online learning operations and controlled hybrid connectivity.
+
+## **Core AWS Services and Platform Capabilities**
+
+### **1. Amazon VPC for Multi-Account Network Segmentation**
+
+Amazon Virtual Private Cloud provides the foundation for Hive's network architecture.
+
+Arthurite designed three separate VPCs across two AWS accounts, with each VPC responsible for a specific infrastructure layer.
+
+The proposed network structure includes:
+
+- **VPC 1 – Web Tier:** Provides the user-facing environment and hosts the Application Load Balancer.
+- **VPC 2 – Application Tier:** Hosts the application services responsible for processing platform requests.
+- **VPC 3 – Data Tier:** Provides the network environment for data services and associated infrastructure.
+
+The VPCs are designed with public and private subnets distributed across multiple Availability Zones, according to their respective infrastructure requirements.
+
+This separation provides a foundation for managing network access independently across the web, application and data layers.
+
+It also makes it easier to define which services can communicate and which network paths should remain restricted.
+
+### **2. AWS Site-to-Site VPN for Secure Hybrid Connectivity**
+
+[AWS Site-to-Site VPN](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) is a central component of the Hive hybrid network design.
+
+It establishes encrypted communication between the customer's on-premises network and the AWS environment using IPsec tunnels.
+
+This allows approved internal systems to communicate with designated AWS-hosted services without requiring direct public exposure of the application and data infrastructure.
+
+The proposed design requires two VPN tunnels per connection to provide connectivity resilience.
+
+If one tunnel becomes unavailable, the architecture is intended to support continued connectivity through the remaining tunnel.
+
+The final implementation must also confirm the VPN attachment point, whether through an AWS Transit Gateway or Virtual Private Gateway, alongside the customer's VPN device, routing protocol and failover configuration.
+
+Where Border Gateway Protocol (BGP) is selected, dynamic routing can support the exchange of network routes between the customer environment and AWS.
+
+This approach provides a controlled foundation for hybrid connectivity while accounting for network availability and security.
+
+### **3. Application Load Balancer for Reliable Learning Platform Access**
+
+Students and teachers need a reliable way to access Hive's online learning services.
+
+Arthurite incorporated an Application Load Balancer (ALB) into the web-facing VPC to serve as the platform's application entry point.
+
+The proposed design distributes incoming requests across healthy application targets and spans at least two Availability Zones.
+
+This provides an architecture designed to maintain service availability if an individual Availability Zone experiences a disruption.
+
+The ALB also provides application-level health monitoring through target health checks.
+
+Amazon CloudWatch can monitor important indicators such as healthy host count and HTTP 5xx errors, helping the infrastructure team identify potential application availability issues.
+
+The final configuration will determine the required listeners, target groups and any additional protection through AWS WAF.
+
+### **4. Route Tables for Controlled Inter-VPC and Hybrid Connectivity**
+
+Network routing is particularly important in a multi-account environment.
+
+Arthurite's architecture uses route tables to determine which networks can communicate across the three VPCs and the customer's on-premises environment.
+
+Rather than allowing unrestricted network access, the proposed routing model permits only the paths required by the platform.
+
+For example, the on-premises network should reach only the approved AWS services required for Hive's operations.
+
+Similarly, communication between the web, application and data layers should follow the approved network architecture.
+
+The route configuration will depend on the selected inter-VPC connectivity mechanism.
+
+Whether the final design uses Transit Gateway, VPC peering or PrivateLink, the objective remains the same: establish controlled communication while maintaining network isolation.
+
+### **5. VPC Endpoints for Private AWS Service Access**
+
+Modern cloud applications frequently communicate with AWS-managed services.
+
+However, routing all service traffic through public internet connections or NAT gateways can introduce unnecessary network dependencies.
+
+Arthurite incorporated VPC endpoints into the Hive architecture to support private access to selected AWS services.
+
+For example, an Amazon S3 gateway endpoint can enable resources within a VPC to access S3 without requiring traffic to traverse the public internet.
+
+Interface endpoints can provide private connectivity to supported AWS services through AWS PrivateLink.
+
+Endpoint policies can also restrict access to approved services and resources.
+
+The final architecture will specify which endpoints are required across the three VPCs.
+
+### **6. Security Groups and Network ACLs for Network Protection**
+
+Security is an essential component of a learning platform that operates across multiple network environments.
+
+Arthurite incorporated security groups and network ACLs to control traffic between the different infrastructure layers.
+
+Security groups provide resource-level traffic controls, allowing only approved sources, destinations and ports.
+
+Network ACLs provide an additional layer of subnet-level traffic filtering.
+
+These controls are particularly important for restricting on-premises access.
+
+The architecture is designed to prevent the customer's internal network from accessing unrelated application components or data resources.
+
+Application and data tiers are also designed without public IP addresses, leaving the load balancer as the only intended internet-facing component.
+
+This layered approach reduces unnecessary network exposure and provides greater control over application communication.
+
+### **7. Amazon CloudWatch for Network Monitoring and Alerting**
+
+Maintaining visibility into network infrastructure is important for ensuring the availability of an online learning platform.
+
+Arthurite incorporated Amazon CloudWatch into the proposed architecture to monitor the health of the application entry point and hybrid connectivity.
+
+The monitoring scope includes:
+
+- **Application availability:** Monitoring healthy load balancer targets and HTTP 5xx errors.
+- **VPN tunnel health:** Monitoring the status of the two IPsec tunnels.
+- **BGP connectivity:** Monitoring BGP session health where dynamic routing is implemented.
+- **Tunnel throughput:** Tracking incoming and outgoing traffic across the VPN tunnels.
+- **Network performance:** Monitoring round-trip latency to the customer's on-premises network.
+- **Connectivity alerts:** Triggering notifications when VPN tunnels or critical network connections become unavailable.
+
+CloudWatch alarms provide a notification mechanism when configured thresholds are exceeded.
+
+This creates a monitoring foundation that helps the technical team identify potential connectivity issues and respond to network problems.
+
+### **8. VPC Flow Logs and AWS CloudTrail for Network Visibility and Auditing**
+
+A multi-account architecture requires visibility into network traffic and infrastructure changes.
+
+Arthurite incorporated Amazon VPC Flow Logs to record information about IP traffic flowing through network interfaces within the three VPCs.
+
+These records support network troubleshooting, security investigations and the identification of rejected or unexpected traffic.
+
+AWS CloudTrail provides an audit trail of API activity across the two AWS accounts.
+
+Together, these services establish a monitoring and auditing foundation that supports operational accountability and security investigations.
+
+## **Security Architecture: Protecting Students, Teachers and Learning Infrastructure**
+
+A learning management system must protect the information and services that students and teachers depend on.
+
+For Hive, Arthurite incorporated a layered security model designed around network isolation, encrypted connectivity and controlled service access.
+
+The architecture includes several important security considerations.
+
+**Encrypted hybrid connectivity:** AWS Site-to-Site VPN uses IPsec to protect traffic exchanged between the customer's on-premises network and AWS.
+
+**Network-level isolation:** Separating the web, application and data tiers into different VPCs establishes distinct network boundaries.
+
+**Controlled routing:** Route tables determine which network paths are permitted between AWS and on-premises infrastructure.
+
+**Restricted service access:** Security groups and network ACLs allow only approved traffic between infrastructure components.
+
+**Private application and data layers:** Application and data resources are designed without public IP addresses, reducing direct exposure to the internet.
+
+**Network traffic auditing:** VPC Flow Logs provide traffic visibility across the VPCs, while CloudTrail records AWS account activity.
+
+**Encryption at rest and in transit:** The design specifies TLS encryption for data in transit and AWS Key Management Service (AWS KMS) for encryption at rest, subject to confirmation of the final configurations.
+
+This approach provides multiple layers of protection while allowing the learning platform to maintain the connectivity required for its operations.
+
+## **Traffic Management and Monitoring: Maintaining Reliable Learning Services**
+
+Network availability directly affects the experience of students and teachers using Hive.
+
+Arthurite incorporated a monitoring framework designed to provide visibility into application health, VPN connectivity and network performance.
+
+The proposed monitoring framework covers five major areas.
+
+**1. Application Entry Point Monitoring**
+
+CloudWatch monitors the Application Load Balancer's healthy host count and HTTP 5xx errors.
+
+Unhealthy application targets or unusual increases in server errors can trigger alerts for investigation.
+
+**2. VPN Tunnel Monitoring**
+
+The architecture monitors the state of both VPN tunnels.
+
+If either tunnel becomes unavailable, the monitoring system can alert the technical team.
+
+Where BGP is used, session health provides an additional connectivity indicator.
+
+**3. VPN Throughput Monitoring**
+
+Incoming and outgoing traffic across the VPN tunnels is monitored to identify sustained utilization.
+
+This helps the team identify possible bandwidth constraints and investigate traffic patterns that could affect communication between AWS and the on-premises environment.
+
+**4. Network Traffic Monitoring**
+
+VPC Flow Logs provide information about accepted and rejected network traffic.
+
+Unexpected increases in rejected traffic can indicate incorrect routing, security rule issues or potentially suspicious activity.
+
+**5. On-Premises Latency Monitoring**
+
+Round-trip latency monitoring provides visibility into communication performance between the AWS environment and the customer's internal network.
+
+Threshold-based alerts can help identify network degradation before it significantly affects dependent services.
+
+Together, these monitoring capabilities provide a foundation for maintaining infrastructure visibility and responding to connectivity issues.
+
+## **Project Implementation: A Structured Four-Phase Approach**
+
+Arthurite structured the Hive hybrid network design and implementation into four phases.
+
+This approach provides a clear delivery framework, allowing the network foundation to be established and validated progressively.
+
+### **Phase 1: Network Design**
+
+The first phase focuses on defining the network architecture and agreeing on the connectivity requirements.
+
+Key activities include identifying the participating AWS accounts, confirming the three-VPC structure, planning network address ranges and defining the hybrid connectivity model.
+
+The phase also establishes the routing and access-control requirements.
+
+Expected deliverables include:
+
+- Approved AWS account and VPC architecture.
+- Network address plan.
+- Inter-VPC connectivity design.
+- Hybrid VPN architecture.
+- Routing and security access model.
+
+### **Phase 2: Foundation Build**
+
+The second phase focuses on creating the AWS network infrastructure.
+
+Arthurite's proposed activities include establishing the VPCs, configuring subnets across Availability Zones and implementing the initial security baseline.
+
+The Application Load Balancer and required VPC endpoints are also included in the foundation build.
+
+VPC Flow Logs and CloudTrail configurations provide the initial monitoring and auditing capabilities.
+
+The objective is to establish the segmented AWS environment required to support Hive's application and data services.
+
+### **Phase 3: Connectivity and Hybrid Integration**
+
+The third phase focuses on establishing communication between the AWS VPCs and the customer's on-premises network.
+
+Key activities include:
+
+- Configuring the selected inter-VPC connectivity mechanism.
+- Establishing AWS Site-to-Site VPN connections.
+- Configuring the required VPN tunnels.
+- Implementing BGP or static routing, depending on the agreed design.
+- Configuring route tables and security rules.
+- Validating approved on-premises service access.
+- Testing VPN tunnel failover and recovery.
+
+This phase ensures that the different network environments can communicate through controlled and secure connectivity paths.
+
+### **Phase 4: Testing, Go-Live and Handover**
+
+The final phase focuses on validating the architecture against the agreed technical and operational requirements.
+
+Testing covers network isolation, VPN connectivity, failover, Availability Zone resilience and monitoring.
+
+The phase also includes operational documentation, knowledge transfer and preparation for production operations.
+
+Expected handover deliverables include:
+
+- As-built architecture diagrams and configuration records.
+- Network and connectivity runbooks.
+- Infrastructure-as-code repository access and deployment pipeline documentation.
+- Monitoring dashboards and alarm ownership records.
+- Training materials and available session recordings.
+- Network connectivity and failover test results.
+- Acceptance certificates.
+- Open issues log with assigned owners and agreed resolution dates.
+
+This structured delivery model provides a framework for validating the network environment before operational responsibility is transferred to the customer.
+
+## **Business and Technical Value**
+
+The Hive hybrid multi-account network architecture addresses important infrastructure requirements associated with operating an online learning management platform.
+
+**Improved network segmentation:** Separating the web, application and data layers into three VPCs provides distinct network boundaries and improves access control.
+
+**Secure hybrid connectivity:** AWS Site-to-Site VPN establishes an encrypted connectivity model between the learning platform and the customer's on-premises environment.
+
+**Controlled on-premises access:** Route tables, security groups and network ACLs provide mechanisms for restricting internal network access to approved AWS services.
+
+**Improved application availability:** The multi-AZ Application Load Balancer provides a resilient entry point for students and teachers accessing the learning platform.
+
+**Cross-account infrastructure management:** Distributing the platform across two AWS accounts provides an architecture for separating infrastructure responsibilities and administrative boundaries.
+
+**Better network visibility:** Amazon CloudWatch provides monitoring and alerting capabilities for application availability, VPN health and network performance.
+
+**Stronger security and auditing:** VPC Flow Logs and CloudTrail provide visibility into network traffic and AWS account activities.
+
+**A foundation for platform growth:** The segmented architecture provides a structured environment that can accommodate future infrastructure changes and additional learning platform services.
+
+Together, these capabilities establish a network foundation designed to support Hive's online learning operations while maintaining secure communication across multiple infrastructure environments.
+
+## **AWS Competency Alignment**
+
+The Hive engagement demonstrates Arthurite Integrated's capabilities in designing hybrid cloud infrastructure for digital learning platforms and multi-account AWS environments.
+
+The architecture brings together several important areas of cloud engineering:
+
+- **Hybrid Cloud Connectivity:** Designing encrypted connectivity between AWS and customer on-premises infrastructure using AWS Site-to-Site VPN.
+- **Multi-Account Cloud Architecture:** Structuring application infrastructure across multiple AWS accounts and VPCs.
+- **AWS Networking:** Implementing VPCs, subnets, route tables, network segmentation and load balancing.
+- **Cloud Security:** Applying security groups, network ACLs, encryption and controlled network access.
+- **High Availability:** Designing multi-Availability Zone application access and VPN tunnel resilience.
+- **Cloud Monitoring and Observability:** Integrating Amazon CloudWatch, VPC Flow Logs and CloudTrail.
+- **Infrastructure Operations:** Establishing network documentation, operational runbooks, testing procedures and handover processes.
+
+By combining these capabilities, Arthurite demonstrates how AWS-native networking services can support secure and reliable cloud infrastructure for modern digital education platforms.
+
+## **Conclusion: Building a Secure Foundation for the Future of Digital Learning**
+
+As online education continues to expand, the infrastructure supporting digital learning platforms must deliver more than application availability. It must provide secure connectivity, controlled access to sensitive resources and the flexibility to support growing learning communities.
+
+For Hive, Arthurite Integrated designed a hybrid multi-account AWS network architecture that separates the platform's web, application and data environments while providing a secure connectivity model to the customer's existing infrastructure.
+
+By combining Amazon VPC, AWS Site-to-Site VPN, Application Load Balancing, controlled inter-VPC connectivity and AWS-native monitoring services, the architecture establishes a foundation for secure and reliable online learning operations.
+
+The approach demonstrates the importance of building cloud infrastructure around clearly defined network boundaries, resilient connectivity and operational visibility.
+
+As digital learning platforms continue to evolve, a well-designed cloud network can help organizations deliver more accessible, secure and dependable educational experiences.
+
+**Looking to build or modernize your Learning Management System infrastructure?**
+
+Arthurite Integrated helps organizations design, deploy and modernize secure AWS environments for digital platforms, enterprise applications and cloud-based services.
+
+Whether you are developing an online learning platform, connecting existing infrastructure to AWS or improving the security of a multi-account cloud environment, our team can help you build an architecture aligned with your technical and business requirements.
+
+Visit [Arthurite Integrated](https://arthuriteintegrated.com/) to explore our cloud solutions and discuss your next cloud infrastructure project.

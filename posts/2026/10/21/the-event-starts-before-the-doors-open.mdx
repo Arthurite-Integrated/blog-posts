@@ -1,0 +1,137 @@
+---
+title: "The Event Starts Before the Doors Open"
+excerpt: "An event starts long before the first guest arrives."
+date: 2026-10-21
+author: "Arthurite Integrated"
+category: "Company"
+featured: false
+---
+*How Tavern Central brings branded event pages, registration, attendee management, and reporting into one platform—built on AWS.*
+
+An event starts long before the first guest arrives.
+
+It starts when someone opens the invitation, checks the details, and decides whether to register. It continues as the organiser tracks responses, updates information, and prepares for the people they expect to welcome.
+
+When those steps happen across separate forms, spreadsheets, and message threads, even a small event creates a surprising amount of administration.
+
+Tavern Central brings those workflows together.
+
+Developed by Arthurite Integrated, the platform gives organisations a central place to publish events, collect registrations, manage attendee records, and understand how participation is developing.
+
+## About the Platform: Professional Event Management for Growing Organisations
+
+Tavern Central is a cloud-native event-management platform designed for organisations and communities that need more structure than a standalone registration form.
+
+Its intended users include community managers, HR teams, and event organisers coordinating physical or virtual gatherings.
+
+The platform connects two experiences: an organiser’s management dashboard and an attendee’s public registration page. Organisers manage the event behind the scenes, while attendees access the information they need through a responsive web interface.
+
+That connection is central to the product. The event page, registration record, attendee list, and dashboard draw from the same underlying system.
+
+## The Challenge: One Event, Too Many Disconnected Tasks
+
+Event coordination becomes difficult when information has to be copied between tools.
+
+An organiser publishes an invitation, links to a form, checks a spreadsheet, removes duplicate entries, and prepares a report. Each step creates another opportunity for records to fall out of sync.
+
+The Tavern Central project identifies several connected challenges:
+
+- **Fragmented coordination:** Event information and registration records are managed across separate systems.
+- **Limited visibility:** Organisers struggle to see how registrations are progressing without manually reviewing responses.
+- **Registration friction:** Unnecessary account creation adds steps for people who simply want to attend.
+- **Inconsistent presentation:** Generic forms can disconnect registration from the organisation’s identity.
+- **Growing administrative work:** Managing additional events means repeating the same manual processes.
+
+Tavern Central addresses these problems through a shared workflow for publishing, registration, and reporting.
+
+## The Solution: Tavern Central—From Event Page to Attendee Record
+
+### Branded Pages That Give Every Event a Home
+
+Organisations can configure their profile, logo, and colours, then create events with descriptions, cover images, schedules, and physical venue details or virtual meeting links.
+
+Each event receives a unique public URL. Organisers can publish it when ready, update its details, and unpublish it when public access is no longer appropriate.
+
+QR-code generation provides another way to share access to the event registration experience.
+
+Together, these capabilities give organisers a consistent destination for event information and registration.
+
+### Registration Without an Attendee Account
+
+Tavern Central’s core registration workflow lets attendees register for public events without creating an account.
+
+That keeps the interaction focused: review the event, provide the required details, and submit the registration.
+
+The documented implementation includes duplicate-email checks for the same event and honeypot protection against automated submissions. These controls support cleaner attendee records while keeping the public form straightforward for legitimate users.
+
+### Attendee Management in One Place
+
+Registration becomes more useful when the organiser can act on it.
+
+Tavern Central provides attendee lists with search, filtering, sorting, and pagination. Authorised users can export records as CSV files for reporting and event preparation.
+
+This connects the public registration process directly to the organiser’s working records, reducing the need to maintain a separate list manually.
+
+### Visibility Into Registration Activity
+
+The dashboard brings together active events, registration counts, registration timelines, and event-level insights.
+
+An organiser can review how responses are developing and compare activity across events from the same management interface.
+
+These reporting capabilities create a clearer basis for planning. The team can work from recorded participation data rather than repeatedly assembling updates from separate sources.
+
+## The Technology: Serverless Infrastructure for Variable Event Traffic
+
+Event traffic is rarely uniform. A registration page may receive little activity for several days, then attract a burst of visits after an announcement.
+
+Tavern Central’s documented architecture uses managed AWS services to accommodate that pattern.
+
+| AWS service | Role in the platform |
+| --- | --- |
+| Amazon Cognito | Organiser authentication and identity management |
+| Amazon API Gateway | Application API routing and request handling |
+| AWS Lambda | Event, registration, attendee, and analytics workflows |
+| Amazon DynamoDB | Organisation, event, and registration data |
+| Amazon S3 | Branding assets, event images, QR codes, and exports |
+| Amazon CloudFront | Frontend content delivery |
+| Amazon CloudWatch | Logs, metrics, monitoring, and alerts |
+
+The frontend uses Next.js and TypeScript, with public event pages and an authenticated organiser dashboard.
+
+The multi-tenant design allows multiple organisations to use the platform while restricting access to their own records. The documented controls include organisation-scoped data access, authenticated API requests, input validation, encryption, and rate limiting.
+
+AWS CDK and GitHub Actions support repeatable infrastructure and application deployment.
+
+## Progress So Far: Core Capabilities Documented as Complete
+
+The project requirements mark the following core capabilities as complete:
+
+| Area | Documented capability |
+| --- | --- |
+| Organisation management | Registration, authentication, profiles, and branding |
+| Event publishing | Physical and virtual events, unique URLs, and publishing controls |
+| Attendee registration | Account-free registration and duplicate prevention |
+| Attendee management | Search, filtering, and CSV export |
+| Reporting | Dashboard metrics and registration timelines |
+
+The supplied materials do not include verified customer adoption figures or measured reductions in administrative time. Those outcomes will need to be established through operational reporting and customer feedback.
+
+The cost model provides a **$100 monthly AWS planning estimate** for an early-stage workload. This is a budget estimate, rather than measured production spending, and should be revised as event volumes and registration traffic grow.
+
+## What Comes Next: Expanding From a Focused Core
+
+The MVP scope centres on free-event publishing, registration, attendee management, and basic reporting.
+
+The broader commercial documents describe additional capabilities, including paid ticketing, payment integrations, expanded communications, and higher-volume subscription plans. Those features extend beyond the defined MVP and should be confirmed against the released product before being advertised as available.
+
+The delivery plan also calls for staged rollout, user acceptance testing, performance validation, and operational readiness checks.
+
+This gives the platform a focused starting point and a path for expanding its capabilities as organisations’ needs develop.
+
+## Strategic Significance: Giving Organisers Time Back
+
+The value of an event-management platform begins with the work surrounding the event.
+
+A consistent page helps people find the details. A straightforward form helps them register. A connected attendee list helps the organiser prepare. A dashboard makes the activity visible.
+
+Tavern Central brings those steps into one platform, giving organisations a clearer way to coordinate participation before the doors open—and a more useful record to work from afterwards.

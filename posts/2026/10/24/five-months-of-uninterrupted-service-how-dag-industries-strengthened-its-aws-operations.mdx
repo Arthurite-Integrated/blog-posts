@@ -1,0 +1,59 @@
+---
+title: "Five Months of Uninterrupted Service: How DAG Industries Strengthened Its AWS Operations"
+excerpt: "For DAG Industries, moving applications to a new cloud environment was only part of the challenge. The business also needed dependable day-to-day operations: clear accountability, continuous monitoring, structured incide…"
+date: 2026-10-24
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+For DAG Industries, moving applications to a new cloud environment was only part of the challenge. The business also needed dependable day-to-day operations: clear accountability, continuous monitoring, structured incident response, and visibility into infrastructure costs.
+
+Its original environment supported DAG Connect, an attendance application, and a corporate website on AWS infrastructure hosted in Dubai. Infrastructure management was reactive, without formal service commitments or a dedicated managed-services team.
+
+Arthurite Integrated helped DAG Industries establish a new foundation through a phased migration followed by ongoing AWS managed services.
+
+## Moving From Migration to Managed Operations
+
+The migration ran over ten weeks, from November 2025 to January 2026. It moved the initial applications to an architecture centred on the AWS Africa (Cape Town) Region, with a Lagos Local Zone component documented in the design.
+
+The engagement covered application workloads, PostgreSQL and DynamoDB databases, deployment automation, and security controls. A 72-hour period of intensive post-launch monitoring and a 30-day warranty window supported the transition.
+
+Managed services began on March 1, 2026. Arthurite assumed operational responsibility under a formal agreement covering daily health checks, incident response, weekly updates, and monthly performance, security, and cost reporting.
+
+The agreement established a 99.5% business-hours uptime target, with response targets ranging from 15 minutes for critical incidents to four hours for low-priority issues.
+
+## Inside the AWS Architecture
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/10/image-7-1024x707.png)
+
+*DAG Industries’ AWS architecture, including its application workloads, multi-account structure, database resilience, and operational controls.*
+
+The design separates management, production, non-production, and security accounts. Within the production environment, application load balancers direct traffic to the relevant services.
+
+Amazon ECS and Amazon EC2 support application workloads, while EC2 Auto Scaling groups support components of the HR platform. Amazon RDS for PostgreSQL provides a primary database and standby across Availability Zones, alongside DynamoDB for additional data requirements.
+
+Amazon CloudFront supports delivery for the candidate portal. Amazon S3 provides backup and archival storage.
+
+The operational layer brings together Amazon CloudWatch, AWS CloudTrail, Amazon GuardDuty, AWS Security Hub, AWS Config, AWS WAF, and AWS KMS. These services support monitoring, activity logging, threat detection, configuration oversight, application protection, and encryption.
+
+## Five Months of Measured Results
+
+The case study records the following results for March through July 2026:
+
+- **100% reported uptime** for the four tracked production applications: DAG Connect and three HR Portal components.
+- **Zero CloudWatch alarm-triggered incidents** during the five-month reporting period.
+- **Daily automated backups**, with monthly restore testing documented as part of the operating process.
+- **Approximately 66% growth in HR Portal requests**, from about 59,000 in April to 98,000 in June, without an SLA breach.
+- **Potential annual savings of $600–$780** identified through a Savings Plan recommendation. These were projected savings, dependent on implementation.
+
+Security operations also included reviewing findings, tracking vulnerabilities, and coordinating remediation with DAG’s development team.
+
+## Building Capacity for the Next Stage
+
+DAG Industries expanded the engagement to include its HR Portal suite and commissioned a three-month, 180-hour AWS certification training programme for internal IT staff.
+
+That combination gave the business ongoing operational support while developing its own cloud capability.
+
+The outcome was a more structured way to run production infrastructure: service commitments, regular reporting, tested recovery processes, and capacity to accommodate growing demand.
+
+**Arthurite Integrated helps organisations migrate, operate, and optimise AWS environments. Contact our team to discuss your cloud operations requirements.**

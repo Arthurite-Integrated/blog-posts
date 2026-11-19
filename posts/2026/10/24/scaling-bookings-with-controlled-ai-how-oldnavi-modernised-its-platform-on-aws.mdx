@@ -1,0 +1,44 @@
+---
+title: "Scaling Bookings With Controlled AI: How Oldnavi Modernised Its Platform on AWS"
+excerpt: "Oldnavi served between 350,000 and 500,000 customers, but dispatch coordination still depended on spreadsheets, calls, and messaging groups."
+date: 2026-10-24
+author: "Arthurite Integrated"
+category: "AI & Data"
+featured: false
+---
+Oldnavi served between 350,000 and 500,000 customers, but dispatch coordination still depended on spreadsheets, calls, and messaging groups.
+
+Coordination errors caused 10% of bookings to be rescheduled. Manual dispatch oversight consumed 30 hours each week, while fragmented software added further expense.
+
+Arthurite Integrated modernised the platform on AWS, combining resilient application infrastructure with AI-assisted booking workflows.
+
+## Architecture Built Around Controlled Access
+
+*Oldnavi’s reference architecture combines a multi-Availability-Zone application environment with an AI layer that accesses business functions through controlled APIs.*
+
+Amazon Route 53 provides DNS routing, with an Application Load Balancer and Amazon API Gateway serving application entry points.
+
+Within the VPC, EC2 application instances span two Availability Zones. Amazon RDS for PostgreSQL provides primary and standby database components, while public and private subnets separate network responsibilities.
+
+Supporting services include Amazon S3, Amazon SNS, and AWS Lambda. Amazon CloudWatch provides monitoring, while AWS KMS, Secrets Manager, IAM, CloudTrail, and Config support encryption, credentials, permissions, activity logging, and configuration oversight.
+
+The diagram places AI orchestration in a separate application layer connected to Amazon Bedrock and controlled tools or APIs. It explicitly excludes direct database access, keeping AI interactions within defined application pathways.
+
+## Results From the First 90 Days
+
+The published case study reports:
+
+- Booking coordination errors reduced to **0.0%**.
+- Dispatch administration decreased to **13.7 hours per week**.
+- Daily workload increased from **90 to more than 200 jobs**, without additional administrative staff.
+- **59,233 successful AI booking invocations**.
+- Customer satisfaction reached **4.97 out of 5**.
+- Estimated net annual benefit totalled **$115,100**.
+
+## A Foundation for Further Growth
+
+The modernised platform brought bookings, dispatch, and AI assistance into a more consistent operating environment.
+
+**Arthurite Integrated helps organisations modernise transactional platforms and introduce AI through controlled workflows. Contact our team to discuss your application.**
+
+*Adapted from the [published Oldnavi case study](https://arthuriteintegrated.com/500000-customers-and-counting-how-oldnavi-rebuilt-its-booking-platform-to-stop-outgrowing-itself/).*

@@ -1,0 +1,239 @@
+---
+title: "How Meridian Partners Is Modernizing Gas Compressor Maintenance with AWS and Predictive Analytics"
+excerpt: "In the oil and gas industry, equipment reliability directly affects production continuity, operating costs, personnel safety and environmental performance. Gas compressors are critical assets within gathering and compres…"
+date: 2026-10-20
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**By: Dauda Lawal – Web Developer**
+
+In the oil and gas industry, equipment reliability directly affects production continuity, operating costs, personnel safety and environmental performance. Gas compressors are critical assets within gathering and compression operations, where an unexpected failure can interrupt throughput, trigger expensive emergency repairs and expose facilities to operational risks.
+
+For organizations operating across remote locations, maintaining equipment reliability becomes even more challenging. Limited network connectivity, fragmented sensor data and traditional maintenance schedules can make it difficult to identify developing faults before they cause unplanned shutdowns.
+
+Meridian Partners faces these challenges across its natural gas compression and gathering operations in Nigeria. To address them, Arthurite Integrated has proposed a **Condition-Based Maintenance and Predictive Analytics Platform powered by Amazon Web Services (AWS)**. The solution is designed to connect industrial sensor data, edge computing, machine learning and automated maintenance workflows to help Meridian identify potential equipment failures earlier and make more informed maintenance decisions.
+
+The proposed platform covers 46 gas compressors across 12 remote sites, using approximately 1,750 monitored sensor tags. By combining AWS IoT Greengrass, AWS IoT SiteWise and Amazon SageMaker, the solution aims to provide continuous equipment monitoring, predictive fault detection and reliable data collection even when site connectivity is unavailable.
+
+Rather than relying exclusively on fixed maintenance intervals or reacting after a machine fails, Meridian would be able to use equipment condition and predicted remaining useful life to prioritize interventions.
+
+This article explores the operational challenges behind the initiative, the AWS architecture proposed by Arthurite Integrated, and the measurable outcomes the project aims to achieve.
+
+*The engagement described in this article is a proposed solution. Its performance targets represent planned outcomes, not verified results from a completed deployment.*
+
+## **The Challenge: Why Traditional Compressor Maintenance Falls Short**
+
+### **1. Calendar-Based Maintenance and Unexpected Failures**
+
+Meridian currently relies primarily on calendar-based and running-hour maintenance schedules. Although these methods provide a predictable maintenance routine, they do not always reflect the actual condition of individual compressors.
+
+Consequently, healthy equipment may undergo unnecessary servicing while developing faults remain undetected between inspections. Bearing wear, lubrication problems, valve deterioration, vibration anomalies and abnormal operating temperatures can progress without triggering a timely maintenance intervention.
+
+The Statement of Work estimates approximately 11 unplanned compressor shutdowns annually, with an average restoration period of 5.5 days per event. Across the fleet, this represents approximately 60 compressor-days of lost availability each year.
+
+These interruptions can reduce gas throughput, increase emergency repair costs and create additional exposure to contractual, safety and environmental risks.
+
+### **2. Remote Operations and Unreliable Connectivity**
+
+Meridian's compressors operate across 12 remote sites that depend on satellite and cellular connectivity. The documented baseline estimates average connectivity uptime at approximately 71%, with outages lasting three to five days occurring at some locations.
+
+This creates a significant challenge for conventional cloud-dependent monitoring. If equipment data cannot reach the cloud, centralized analytics may lose visibility into developing faults. Data and alerts can also be delayed or lost if the system does not buffer information locally.
+
+Furthermore, existing sensor readings are primarily stored in site historians and SCADA systems, where engineers review them after the fact. The absence of fleet-wide analytics makes it harder to compare asset health, identify recurring failure patterns and apply lessons learned consistently across facilities.
+
+### **3. Slow Alert-to-Maintenance Workflows**
+
+When an alarm occurs, the current process relies on phone calls, emails and manual work-order creation. The delay between detecting a problem and scheduling maintenance can range from hours to days.
+
+This process can result in inconsistent prioritization, slower response to critical faults and additional administrative work for reliability engineers and field technicians.
+
+Meridian's estimated annual reactive-maintenance costs total approximately ₦527 million. The estimate includes lost throughput, emergency repair premiums, unnecessary calendar-based maintenance, safety and environmental incident exposure, and manual rounds and data logging.
+
+These figures are initial baseline estimates that will require validation during the project's discovery phase.
+
+## **The AWS Solution: An Edge-to-Cloud Predictive Maintenance Platform**
+
+Arthurite Integrated has proposed an industrial IoT architecture that combines local processing at remote facilities with centralized analytics and machine learning in AWS.
+
+At each site, AWS IoT Greengrass V2 runs on an industrial edge gateway to collect and process data from existing programmable logic controllers (PLCs), remote terminal units (RTUs) and SCADA systems. The gateway extracts useful features from high-frequency vibration measurements, aggregates sensor readings and applies local alarm rules.
+
+AWS IoT SiteWise organizes the collected information into a structured hierarchy of sites, compressor trains, individual compressors and subsystems. This gives engineers a consistent view of equipment health across the fleet.
+
+Amazon SageMaker supports custom machine-learning models for anomaly detection, failure-mode classification and remaining useful life estimation. Amazon EventBridge, Amazon SNS and AWS Lambda route alerts and connect the analytics platform to Meridian's existing computerized maintenance management system (CMMS).
+
+Meanwhile, Amazon S3 provides historical data storage, AWS Glue and Amazon Athena support data preparation and analysis, and Amazon Managed Grafana delivers operational dashboards.
+
+The architecture is specifically designed for remote industrial environments: local monitoring and data buffering continue during connectivity outages, while AWS Direct Connect and a backup AWS Site-to-Site VPN provide resilient connectivity to the cloud.
+
+## **Five Key Engineering Capabilities Behind the Proposed Solution**
+
+### **1. Edge Computing for Continuous Monitoring at Remote Sites**
+
+One of the most important components of the proposed platform is its ability to continue operating when a remote site loses connectivity.
+
+AWS IoT Greengrass V2 enables each site gateway to collect data, calculate sensor features, apply local alarm rules and buffer information without depending on a continuous cloud connection.
+
+For example, vibration sensors may generate raw measurements at frequencies ranging from 1 kHz to 10 kHz. Sending all that raw data across a constrained satellite connection would create unnecessary bandwidth demands. The proposed edge-processing pipeline extracts features such as root mean square (RMS), peak values, kurtosis and fast Fourier transform (FFT) bands before transmitting compact summaries.
+
+The Statement of Work estimates that this processing approach could reduce transmitted data volume by approximately 90%.
+
+The platform also proposes up to seven days of local data buffering through Greengrass Stream Manager. When connectivity returns, buffered data is synchronized with the cloud in sequence.
+
+Key capabilities include:
+
+- Read-only connectivity to existing industrial protocols, including OPC UA and Modbus TCP.
+- Local sensor processing and equipment alarm rules.
+- Offline data storage and automatic synchronization after reconnection.
+- Local inference for selected critical monitoring scenarios.
+- Remote deployment and configuration management for edge components.
+
+This approach is intended to maintain visibility into compressor conditions even when remote sites cannot communicate reliably with centralized systems.
+
+### **2. Predictive Analytics with Amazon SageMaker**
+
+The proposed platform moves beyond threshold-based monitoring by applying machine learning to equipment behavior.
+
+Arthurite plans to use Amazon SageMaker to train custom models on approximately 18–24 months of historical sensor data, maintenance records and known failure events, subject to data availability.
+
+The models are designed to account for differences in compressor operating conditions, including speed, load and ambient temperature. This normalization helps distinguish genuine equipment deterioration from normal operational changes.
+
+Three major analytical capabilities are proposed.
+
+**Multivariate anomaly detection:** Autoencoder and isolation-forest approaches identify deviations from normal operating patterns across sensors and compressor subsystems.
+
+**Failure-mode classification:** Supervised models estimate probable fault categories, such as bearing problems, valve deterioration, lubrication issues or cooling failures, where sufficient labeled historical data exists.
+
+**Remaining useful life estimation:** Degradation-trend and survival models estimate how much useful operating life may remain for selected components, including bearings and valves.
+
+The project targets early warnings of at least 72 hours for detectable failure modes within 12 months. It also targets at least 80% top-ranked failure-mode classification accuracy on validation events and remaining useful life estimates within ±20% for qualifying seven-day-to-failure cases.
+
+These are proposed validation targets. Where historical examples are insufficient to train reliable supervised models, the initial solution will use anomaly detection and engineering rules while collecting more labeled events.
+
+### **3. Automated Alerts and Maintenance Work-Order Integration**
+
+Predictive analytics delivers operational value when its findings lead to timely maintenance action.
+
+Arthurite's proposed architecture uses Amazon EventBridge to route detection events and AWS Lambda to enrich them with asset details, probable failure modes and recommended actions. Amazon SNS delivers notifications to the appropriate supervisors and engineers.
+
+The platform will also integrate with Meridian's existing CMMS through an API or another agreed integration route. Instead of manually translating alarms into maintenance requests, the system is designed to create prioritized work orders with supporting evidence.
+
+The proposed alert framework includes four levels:
+
+- **Advisory:** Emerging anomalies with longer estimated remaining useful life are summarized for reliability engineers and considered during planned maintenance.
+- **Warning:** Sustained anomalies or declining remaining useful life trigger notifications and higher-priority work orders.
+- **Critical:** Severe anomalies, imminent predicted failures or exceeded OEM limits trigger urgent notifications and Priority-1 work orders.
+- **Trip or safety event:** Existing control-system safety alarms trigger immediate notifications and incident-linked work orders.
+
+The control system remains authoritative for trips and shutdowns. The analytics platform is read-only and advises maintenance personnel; it does not start, stop or adjust compressor equipment.
+
+Meridian's target is to reduce alert-to-work-order creation time from hours or days to less than two minutes within 12 months. This automation is intended to make maintenance prioritization more consistent and shorten the gap between fault detection and intervention.
+
+### **4. Centralized Asset Modeling and Fleet Reliability Dashboards**
+
+Meridian needs a consistent way to understand equipment condition across different sites and compressor types.
+
+AWS IoT SiteWise provides the proposed asset hierarchy, organizing information at fleet, site, compressor-train, compressor and subsystem levels. Reusable asset templates are intended to simplify onboarding for reciprocating and centrifugal compressors.
+
+This structure enables teams to compare equipment performance and apply consistent measurements and alarm rules across the fleet.
+
+Amazon Managed Grafana will provide dashboards for operations, maintenance planners, reliability engineers and management. The planned dashboards include:
+
+- **Fleet Health Overview:** Site availability, compressor health scores, open alerts and connectivity status.
+- **Compressor Detail:** Vibration, temperature and pressure trends, anomaly history and probable failure modes.
+- **Maintenance Planning:** Remaining useful life estimates, recommended work windows and work-order status.
+- **Reliability KPIs:** Unplanned shutdowns, downtime, mean time between failures (MTBF), mean time to repair (MTTR) and model precision.
+
+Amazon S3 stores historical sensor features, alerts and maintenance outcomes, while AWS Glue and Amazon Athena support historical analysis and reliability reporting.
+
+By combining equipment measurements with maintenance history, the platform is designed to help engineers identify recurring problems, compare asset performance and use historical evidence to improve future maintenance decisions.
+
+### **5. Resilient Connectivity and Industrial-Grade Security**
+
+A predictive maintenance platform for remote energy infrastructure must remain dependable under difficult network conditions while protecting operational technology.
+
+The proposed design uses AWS Direct Connect as the primary cloud connectivity path and AWS Site-to-Site VPN as a backup. Automatic failover is intended to preserve connectivity when the primary path becomes unavailable.
+
+Within AWS, the cloud architecture will use multiple Availability Zones for supported components to improve resilience. Local gateways continue collecting sensor data and applying configured rules during site-level outages.
+
+The security architecture includes several important controls:
+
+- AWS Identity and Access Management (IAM) for access control.
+- AWS Key Management Service (AWS KMS) for encryption key management.
+- AWS IoT device certificates and AWS IoT Device Defender for device identity and security monitoring.
+- AWS CloudTrail for audit logging.
+- Amazon CloudWatch for operational metrics, logs and alarms.
+- Read-only integration with existing PLC, RTU and SCADA systems.
+
+These controls are intended to support secure data exchange and operational monitoring without introducing automated control commands into industrial systems.
+
+The final AWS Region will be selected during discovery based on service availability, latency and data-residency requirements. AWS Africa (Cape Town) is the preferred option in the proposal, subject to confirmation that all required services are available.
+
+## **Expected Business Impact: The Targets Meridian Aims to Achieve**
+
+The proposed platform establishes measurable objectives for evaluating its operational value.
+
+| **Performance indicator** | **Current baseline** | **12-month target** |
+| --- | --- | --- |
+| Unplanned compressor shutdowns | Approximately 11 per year | 6 or fewer per year |
+| Unplanned downtime | Approximately 60 compressor-days annually | 36 or fewer compressor-days annually |
+| Early-warning lead time | No established predictive baseline | At least 72 hours for detectable failures |
+| Maintenance driven by equipment condition | 0% | 60% of maintenance work |
+| Alert precision | Not measured | At least 85% |
+| Alert-to-work-order creation | Hours to days | Under 2 minutes |
+| Data recovery after connectivity outages | Data may be lost or uncaptured | At least 99.5% |
+| Offline operation | No established offline autonomy | Up to 7 days |
+| Emergency repairs and expedited parts | Estimated ₦85M annual baseline | 30% reduction |
+| Unnecessary calendar-based maintenance | Baseline to be validated | 25% reduction |
+
+*These figures are proposed targets from the Statement of Work, not verified production results. Baseline measurements, model performance and actual savings must be validated during implementation and subsequent operations.*
+
+If the targets are achieved, Meridian could reduce unplanned compressor downtime by approximately 40%, improve maintenance planning and reduce avoidable emergency interventions. More importantly, earlier fault detection could give engineers additional time to plan repairs before a developing problem becomes an unplanned shutdown.
+
+## **An 18-Week Implementation Roadmap**
+
+Arthurite Integrated proposes an 18-week phased delivery plan, starting with three pilot sites before expanding to the remaining nine locations.
+
+**Phase 1: Discovery and Design — Weeks 1–3**
+
+The team will conduct site surveys, inventory sensor tags, assess data quality and review historical failure records. A failure mode and effects analysis (FMEA) workshop will help Meridian's engineers prioritize failure modes and define the initial asset and network architecture.
+
+**Phase 2: Edge Platform and Connectivity — Weeks 4–8**
+
+The team will configure the Greengrass edge platform, commission three pilot sites, develop SiteWise asset models and establish Direct Connect and VPN connectivity. Historical data will also be loaded into the proposed data platform.
+
+**Phase 3: Predictive Models and Alerting — Weeks 9–13**
+
+The project will develop and validate anomaly detection, failure-mode classification and remaining useful life models. Alerting workflows, work-order integration and fleet dashboards will be tested against historical events and controlled scenarios.
+
+**Phase 4: Fleet Rollout and Handover — Weeks 14–18**
+
+The solution will expand to the remaining nine sites, followed by offline and failover validation, user acceptance testing, staff training and operational handover. A 30-day shadow-mode validation period is planned before alerts begin driving production work orders.
+
+This staged delivery approach is designed to test the system under real operating conditions and allow Meridian to validate model performance before using predictive alerts as part of routine maintenance planning.
+
+## **Advancing AWS Solutions for Energy and Industrial Operations**
+
+The Meridian initiative illustrates how industrial IoT, edge computing and machine learning can work together to address reliability challenges in the energy sector.
+
+AWS IoT Greengrass supports local processing in remote environments, AWS IoT SiteWise structures industrial asset information, and Amazon SageMaker enables custom predictive models. Event-driven AWS services connect analytical insights to maintenance workflows, while resilient connectivity helps preserve data continuity across distributed sites.
+
+Together, these capabilities form a proposed architecture for moving from reactive maintenance toward condition-based asset management.
+
+The use case also complements Arthurite Integrated's broader energy technology portfolio, including the proposed smart meter analytics and AI load forecasting platform for GridPulse Utilities and AI-powered HSE monitoring platform for Ironridge Energy Operation.
+
+By applying AWS to different operational challenges across the energy value chain, Arthurite can develop solutions that address data visibility, equipment reliability, operational safety and more informed decision-making.
+
+## **Conclusion: From Equipment Failures to Predictive Maintenance**
+
+Unplanned compressor failures can disrupt throughput, increase maintenance expenditure and create avoidable operational risks. Traditional maintenance schedules remain useful, but they do not always reveal how an individual asset is performing between scheduled inspections.
+
+Arthurite Integrated's proposed condition-based maintenance platform for Meridian Partners aims to address this limitation through continuous edge monitoring, predictive analytics, automated work orders and fleet-wide reliability dashboards.
+
+Its defining capability is the combination of cloud intelligence with local autonomy. Compressors can continue to be monitored during connectivity outages, while historical data and machine-learning models support earlier identification of developing faults.
+
+Achieving the intended benefits will depend on reliable sensor data, sufficient historical maintenance records, rigorous model validation, secure integration and adoption by Meridian's maintenance teams. With those foundations in place, the proposed solution could help Meridian make more timely maintenance decisions and improve the reliability of its gas compression operations.
+
+**Looking to modernize industrial asset management with AWS?**
+
+Arthurite Integrated works on cloud architecture, industrial IoT, predictive analytics and automation solutions designed around operational requirements. Contact Arthurite Integrated to explore how AWS-powered technologies could support your organization's asset reliability and digital transformation goals.

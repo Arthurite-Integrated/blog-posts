@@ -1,0 +1,333 @@
+---
+title: "Powering Large-Scale Data Warehouse Migration to AWS: How Arthurite Integrated Designed a Resilient Hybrid Connectivity Architecture for ATGhana"
+excerpt: "For telecommunications companies, data is more than an operational resource. It powers revenue reporting, customer insights, financial reconciliation and critical business decisions. As data volumes increase, organizatio…"
+date: 2026-11-11
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**By: Dauda Lawal – Web Developer**
+
+## **Introduction**
+
+For telecommunications companies, data is more than an operational resource. It powers revenue reporting, customer insights, financial reconciliation and critical business decisions. As data volumes increase, organizations must ensure that their infrastructure can process, transfer and protect information without disrupting essential business operations.
+
+ATGhana, a telecommunications and Mobile Financial Services (MFS) provider in Ghana, operates a substantial data warehouse containing approximately 250TB of data across Microsoft SQL Server instances within its private on-premises network. With an estimated daily data growth of 0.5TB, the organization needed a network architecture capable of supporting large-scale data migration while maintaining reliable connectivity between its existing infrastructure and AWS.
+
+The migration also introduced a critical operational consideration. Between 2am and 6am daily, ATGhana processes Call Detail Records (CDR), revenue reports and MFS reconciliation activities. Any disruption during this period could affect important business operations.
+
+To address these requirements, Arthurite Integrated developed a hybrid connectivity and network foundation designed to support ATGhana's data warehouse migration to Amazon Web Services (AWS).
+
+The proposed architecture combines AWS Direct Connect, Site-to-Site VPN, Amazon Virtual Private Cloud (Amazon VPC), AWS Database Migration Service (AWS DMS) and AWS monitoring capabilities. Together, these technologies establish a framework for secure, resilient and controlled data movement between ATGhana's existing infrastructure and AWS.
+
+## **The Challenge: Migrating 250TB of Enterprise Data Without Disrupting Critical Operations**
+
+[Large-scale database migration](https://www.cyberly.org/en/how-do-i-handle-large-scale-database-migrations/index.html) involves more than transferring information from one environment to another. Organizations must account for network capacity, connectivity reliability, data consistency, security, operational workloads and disaster recovery.
+
+For ATGhana, several infrastructure challenges shaped the requirements for the migration.
+
+### **1. Managing a Large and Continuously Growing Data Warehouse**
+
+ATGhana's existing data warehouse contained approximately 250TB of SQL Server data, with 11 priority reporting instances representing around 50TB selected for the initial proof of concept.
+
+The environment also experienced daily data growth of approximately 0.5TB.
+
+This meant that the migration architecture needed to support both the initial transfer of historical data and continuous replication of subsequent database changes.
+
+A conventional internet-based transfer approach would introduce additional uncertainty around available bandwidth, throughput and transfer consistency. The organization therefore required dedicated private connectivity between its on-premises infrastructure and AWS.
+
+### **2. Maintaining Business Continuity During Critical Processing Windows**
+
+One of the most important requirements involved protecting ATGhana's daily processing window between 2am and 6am.
+
+During this period, the organization handles CDR metrics, revenue reporting and MFS reconciliation.
+
+The migration infrastructure needed to operate without introducing unacceptable network congestion or affecting production database performance.
+
+Arthurite therefore incorporated traffic management and bandwidth throttling into the proposed connectivity architecture to control migration traffic and prioritize critical business operations.
+
+### **3. Establishing Reliable Connectivity and Automatic Failover**
+
+The migration required a dependable connection between ATGhana's private network and AWS.
+
+A single connectivity path would introduce a potential point of failure. If the primary connection became unavailable, ongoing replication and reporting activities could be interrupted.
+
+The architecture therefore required AWS Direct Connect as the preferred private connectivity path, supported by an encrypted Site-to-Site VPN connection as a backup.
+
+Dynamic routing through Border Gateway Protocol (BGP) would allow the network to respond to connectivity changes and support automatic failover between the available paths.
+
+### **4. Securing Data Movement Across Hybrid Infrastructure**
+
+Moving sensitive telecommunications and financial reporting data into AWS requires appropriate network segmentation, encryption and access controls.
+
+ATGhana needed a network architecture that separated database, application and reporting environments while restricting communication to approved traffic flows.
+
+The solution also needed to account for data residency requirements, ensuring that data remained within approved AWS Regions in accordance with applicable Ghanaian data protection requirements.
+
+These challenges established the technical foundation for Arthurite's hybrid connectivity design.
+
+## **The Solution: Designing a Resilient AWS Hybrid Connectivity Architecture**
+
+Arthurite Integrated designed a hybrid network architecture that establishes private, high-bandwidth connectivity between ATGhana's existing network and AWS.
+
+The proposed design uses a 1Gbps AWS Direct Connect connection as the primary connectivity path. A private virtual interface connects the customer's network to the AWS environment through the appropriate gateway architecture.
+
+To provide additional resilience, AWS Site-to-Site VPN supplies an encrypted backup connectivity path using IPsec tunnels and dynamic BGP routing.
+
+Both connectivity paths support a multi-Availability Zone Amazon VPC architecture, where network segmentation separates database, application and reporting workloads.
+
+AWS Database Migration Service handles the initial database transfer and ongoing Change Data Capture (CDC) replication traffic over the private network path.
+
+Amazon CloudWatch provides visibility into connection health, tunnel status, link utilization and replication performance. VPC Flow Logs and AWS CloudTrail provide additional network traffic and API activity visibility.
+
+The architecture also incorporates Amazon S3 cross-Region replication to support the proposed disaster recovery strategy.
+
+This design provides a structured approach to moving large volumes of enterprise data while maintaining the connectivity, security and operational controls required for hybrid cloud operations.
+
+## **Core AWS Services and Platform Capabilities**
+
+### **1. AWS Direct Connect for Dedicated Private Connectivity**
+
+AWS Direct Connect forms the primary connectivity layer of the proposed architecture.
+
+Unlike conventional internet-based connectivity, Direct Connect establishes a dedicated network connection between the customer's infrastructure and AWS through an approved Direct Connect location or connectivity partner.
+
+For ATGhana, the proposed design uses a 1Gbps Direct Connect connection with a private virtual interface and BGP routing.
+
+This provides a dedicated connectivity path for database migration, replication and reporting traffic.
+
+The architecture also accounts for redundant connectivity to improve availability and reduce dependence on a single network connection.
+
+By using Direct Connect, the migration environment can benefit from more predictable network performance and a dedicated private connectivity model.
+
+### **2. AWS Site-to-Site VPN for Encrypted Backup Connectivity**
+
+A resilient hybrid architecture must account for the possibility that its primary network connection becomes unavailable.
+
+Arthurite incorporated AWS Site-to-Site VPN as the backup connectivity mechanism.
+
+The proposed design uses two IPsec VPN tunnels with BGP dynamic routing. Under normal operating conditions, Direct Connect remains the preferred path.
+
+If the primary Direct Connect BGP session becomes unavailable, routing is designed to shift traffic to the VPN connection.
+
+When Direct Connect connectivity is restored, the architecture is intended to support automatic failback to the primary path.
+
+This approach provides an additional layer of connectivity resilience for ongoing database replication and reporting operations.
+
+### **3. Amazon VPC for Multi-AZ Network Infrastructure**
+
+Arthurite designed a multi-Availability Zone Amazon VPC to host the AWS infrastructure supporting the data warehouse migration.
+
+The network architecture separates workloads into distinct tiers, including:
+
+- **Database tier:** Hosts the database migration targets and associated database resources.
+- **Application tier:** Supports application-level communication and required service integrations.
+- **Reporting tier:** Provides network access for reporting workloads and associated services.
+- **Management access:** Controls administrative connectivity to infrastructure resources.
+
+Security groups and network Access Control Lists (network ACLs) provide additional traffic restrictions between these environments.
+
+This segmentation helps ensure that workloads communicate only through approved network paths and required ports.
+
+The architecture also requires non-overlapping IP address ranges between ATGhana's on-premises environment and the AWS VPC to prevent routing conflicts.
+
+### **4. AWS Database Migration Service for Large-Scale Data Movement**
+
+AWS Database Migration Service (AWS DMS) plays a central role in the proposed migration architecture.
+
+The service supports two important stages of the data movement process.
+
+**Full load migration**
+
+The initial full load transfers existing database information from ATGhana's SQL Server environment into the designated AWS migration targets.
+
+For the proof of concept, the migration scope identifies 11 priority reporting instances containing approximately 50TB of data.
+
+**Change Data Capture (CDC)**
+
+After the initial load, CDC captures ongoing database changes and replicates them to the target environment.
+
+This capability is particularly important because ATGhana's databases continue generating approximately 0.5TB of new data daily.
+
+Rather than relying exclusively on a one-time data transfer, the architecture uses continuous change replication to support synchronization between the source and target environments.
+
+By carrying migration and replication traffic over the private connectivity infrastructure, the solution provides a controlled pathway for transferring enterprise database workloads to AWS.
+
+### **5. Amazon CloudWatch for Network and Migration Monitoring**
+
+For a large-scale migration, network visibility is essential.
+
+Arthurite incorporated Amazon CloudWatch into the architecture to monitor connectivity health, network utilization and replication performance.
+
+The monitoring scope includes:
+
+- **Direct Connect status:** Monitoring connection availability and BGP session health.
+- **VPN tunnel status:** Observing the availability of both backup VPN tunnels.
+- **Network utilization:** Tracking incoming and outgoing traffic across the connectivity infrastructure.
+- **Replication performance:** Monitoring AWS DMS replication lag.
+- **Connectivity alerts:** Triggering notifications when network connections or tunnels become unavailable.
+- **Capacity monitoring:** Identifying sustained network utilization that may affect migration performance.
+
+CloudWatch alarms provide a notification mechanism for the IT team when configured thresholds are exceeded.
+
+This creates a monitoring foundation that helps infrastructure teams identify connectivity problems and investigate migration performance issues.
+
+### **6. VPC Flow Logs and AWS CloudTrail for Network Visibility and Auditing**
+
+Security and operational accountability require visibility into network activity and infrastructure changes.
+
+Arthurite included Amazon VPC Flow Logs to capture information about IP traffic flowing through the VPC network interfaces.
+
+AWS CloudTrail provides an audit trail of AWS account activity and API operations.
+
+Together, these services support infrastructure troubleshooting, security investigations and operational auditing.
+
+The architecture also incorporates AWS Key Management Service (AWS KMS) customer-managed keys for encryption at rest, alongside private connectivity and TLS protection for relevant application traffic.
+
+### **7. Amazon S3 Cross-Region Replication for Disaster Recovery**
+
+Disaster recovery is an important consideration when designing infrastructure for telecommunications and financial services workloads.
+
+The proposed architecture includes Amazon S3 cross-Region replication to maintain copies of designated data in a separate AWS Region.
+
+This provides an additional component of the disaster recovery strategy and supports the requirement to maintain copies of data in approved geographical locations.
+
+The primary and disaster recovery Regions must be agreed with ATGhana to ensure that the architecture satisfies its data residency and operational requirements.
+
+## **Capacity Planning: Engineering for Large-Scale Data Transfer**
+
+One of the most important aspects of the ATGhana engagement was understanding how much data the network needed to carry and how long the initial migration could take.
+
+The proposed architecture used a 1Gbps Direct Connect link as its planning baseline.
+
+Based on the capacity calculations documented in the project SOW, the estimated transfer requirements were as follows:
+
+| **Migration workload** | **Estimated transfer time** |
+| --- | --- |
+| Initial 50TB proof of concept | 4.6 days at full line rate |
+| Initial 50TB proof of concept | 6.6 days at 70% usable capacity |
+| Full 250TB data warehouse | 23 days at full line rate |
+| Full 250TB data warehouse | 33 days at 70% usable capacity |
+| Ongoing daily data growth | Approximately 46Mbps average |
+
+These figures represent theoretical capacity-planning estimates, not confirmed migration durations.
+
+The distinction is important because actual throughput depends on protocol overhead, available bandwidth, throttling policies and other network conditions.
+
+The architecture also recognizes that processing 2TB of data per hour within AWS is a separate requirement from transferring data over the network. A 1Gbps connection can carry approximately 0.45TB per hour at theoretical line rate.
+
+To address these capacity considerations, the proposed design identified several options:
+
+- Increasing the Direct Connect port capacity where required.
+- Applying data compression to reduce transfer volumes.
+- Using an offline data transfer approach for bulk migration where appropriate.
+- Scheduling and throttling migration traffic to protect production workloads.
+
+This capacity-planning approach helps align network infrastructure with the scale of the data warehouse migration.
+
+## **Project Implementation: A Structured Four-Phase Approach**
+
+Arthurite structured the network workstream around four implementation phases, aligned with the wider data warehouse migration plan.
+
+### **Phase 1: Network Planning and Foundation**
+
+The initial phase focuses on establishing the network foundation required for hybrid connectivity.
+
+Key activities include agreeing on the IP address plan, arranging Direct Connect provisioning, designing the AWS VPC and implementing the initial security baseline.
+
+Deliverables include:
+
+- Approved network address plan.
+- Direct Connect provisioning arrangements.
+- Multi-AZ VPC architecture.
+- Security groups and network ACLs.
+- VPC Flow Logs configuration.
+
+### **Phase 2: Connectivity and Failover**
+
+The second phase focuses on establishing the primary and backup connectivity paths.
+
+Arthurite's proposed implementation includes bringing up Direct Connect and Site-to-Site VPN connections, configuring BGP routing and validating connectivity failover.
+
+The primary objective is to demonstrate that replication and reporting traffic can continue using the backup VPN path if Direct Connect becomes unavailable.
+
+The phase also includes testing automatic failback when the primary connection is restored.
+
+### **Phase 3: Migration Transfer**
+
+Once the network foundation is established, the migration phase focuses on transferring the initial database workloads and maintaining ongoing CDC replication.
+
+AWS DMS handles the full load and continuous change replication processes over the private connectivity path.
+
+Traffic throttling and scheduling help control network utilization, particularly during ATGhana's critical 2am to 6am processing window.
+
+The objective is to maintain replication performance without introducing unacceptable disruption to production operations.
+
+### **Phase 4: Validation and Go-Live**
+
+The final phase focuses on evaluating the migration architecture against the agreed performance, security and availability requirements.
+
+Key activities include:
+
+- Validating network performance and connectivity resilience.
+- Reviewing Direct Connect and VPN failover results.
+- Assessing database replication lag.
+- Testing CloudWatch dashboards and alarms.
+- Reviewing network segmentation and access controls.
+- Preparing operational runbooks.
+- Delivering the agreed knowledge transfer and handover.
+
+This phased approach establishes clear checkpoints for reviewing the network foundation before proceeding to wider migration activities.
+
+## **Business and Technical Value**
+
+The proposed hybrid connectivity architecture addresses several important requirements associated with ATGhana's data warehouse modernization initiative.
+
+**Dedicated private connectivity:** AWS Direct Connect provides the primary connectivity model for moving enterprise data between ATGhana's network and AWS.
+
+**Connectivity resilience:** The combination of Direct Connect and Site-to-Site VPN establishes primary and backup network paths designed to support failover and failback.
+
+**Controlled data migration:** AWS DMS supports both initial database transfers and ongoing CDC replication, providing a structured approach to migrating continuously changing databases.
+
+**Protection of critical business operations:** Traffic shaping and bandwidth throttling provide mechanisms for controlling migration traffic during important CDR, revenue reporting and MFS reconciliation activities.
+
+**Improved network segmentation:** The multi-AZ VPC design separates database, application and reporting workloads through security groups and network ACLs.
+
+**Greater operational visibility:** Amazon CloudWatch, VPC Flow Logs and CloudTrail provide monitoring and auditing capabilities across the proposed hybrid infrastructure.
+
+**Disaster recovery planning:** Amazon S3 cross-Region replication provides an additional component of the proposed data protection and recovery strategy.
+
+Together, these capabilities establish a network foundation designed to support ATGhana's transition towards AWS-based data warehouse operations.
+
+## **AWS Competency Alignment**
+
+The ATGhana engagement demonstrates Arthurite Integrated's capabilities in designing hybrid cloud infrastructure for organizations with demanding data movement, connectivity and security requirements.
+
+The proposed architecture brings together several important areas of cloud engineering:
+
+- **Hybrid Cloud Connectivity:** Designing dedicated private connectivity using AWS Direct Connect and encrypted backup connectivity through AWS Site-to-Site VPN.
+- **Network Architecture:** Implementing multi-AZ VPC environments, routing, network segmentation and traffic controls.
+- **Database Migration Infrastructure:** Supporting large-scale database transfers and continuous replication through AWS Database Migration Service.
+- **Cloud Security:** Incorporating encryption, network access restrictions, AWS KMS, VPC Flow Logs and CloudTrail.
+- **Monitoring and Observability:** Using Amazon CloudWatch to monitor connectivity, network utilization and replication performance.
+- **Disaster Recovery Architecture:** Incorporating cross-Region data replication into the wider infrastructure design.
+
+These capabilities demonstrate how Arthurite approaches complex enterprise infrastructure projects by aligning network architecture with data migration, security and business continuity requirements.
+
+## **Conclusion: Building a Resilient Foundation for Data-Driven Telecommunications**
+
+As telecommunications organizations continue generating increasing volumes of operational and financial data, the infrastructure supporting that information must evolve accordingly.
+
+Moving a 250TB data warehouse into the cloud requires more than database migration tools. It requires a carefully designed network foundation capable of supporting high-volume transfers, continuous replication, secure connectivity and reliable operations.
+
+Through its engagement with ATGhana, Arthurite Integrated developed a hybrid connectivity architecture designed to address these requirements using AWS Direct Connect, Site-to-Site VPN, Amazon VPC, AWS Database Migration Service and other AWS services.
+
+The proposed architecture provides a framework for moving enterprise database workloads to AWS while accounting for connectivity resilience, network security, traffic management and disaster recovery.
+
+For organizations planning large-scale cloud migrations, the right infrastructure design can make the difference between a difficult transition and a controlled modernization journey.
+
+**Planning a large-scale cloud migration or hybrid infrastructure modernization?**
+
+Arthurite Integrated helps businesses design secure, resilient and scalable AWS environments that support enterprise workloads, database migration, network connectivity and cloud transformation.
+
+Visit [Arthurite Integrated](https://arthuriteintegrated.com/) to explore our cloud solutions and discuss your next infrastructure modernization project.

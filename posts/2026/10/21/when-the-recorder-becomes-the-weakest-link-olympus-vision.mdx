@@ -1,0 +1,128 @@
+---
+title: "When the Recorder Becomes the Weakest Link - Olympus Vision"
+excerpt: "A surveillance camera can capture an incident perfectly and still fail the business relying on it."
+date: 2026-10-21
+author: "Arthurite Integrated"
+category: "Company"
+featured: false
+---
+*How Olympus Vision connects IP cameras to AWS—building a cloud foundation for CCTV companies and the customers they protect.*
+
+A surveillance camera can capture an incident perfectly and still fail the business relying on it.
+
+If the footage lives only on a recorder that is stolen, damaged, or no longer working, the evidence may disappear with it. If storage fills up, keeping more history means buying more hardware. And if the owner needs to check another location, accessing the recording can become a technical task of its own.
+
+Olympus Vision was built to address those limitations.
+
+Developed by Arthurite Integrated in collaboration with Roundbox Solutions, the platform connects IP cameras to AWS through Raspberry Pi edge devices, creating a foundation for cloud video storage, remote viewing, and centralised surveillance management.
+
+## About the Solution: Cloud Surveillance Built for CCTV Providers
+
+Olympus Vision is designed around two groups: the CCTV companies that install and manage surveillance systems, and the customers who depend on those systems.
+
+For installation companies, the platform creates a path to offering cloud surveillance as an ongoing service. For customers, it brings footage storage and access beyond the physical recorder at their premises.
+
+The intended users include security installers, regional system integrators, and surveillance contractors serving commercial and residential locations.
+
+Its business model follows that relationship: CCTV providers manage their customers through the platform, while customers receive access to their assigned cameras and footage.
+
+## The Challenge: Recording Video Is Only Part of the Job
+
+Traditional CCTV deployments place substantial responsibility on equipment at the installation site.
+
+That creates several operational constraints:
+
+- **Fixed storage capacity:** Longer retention or additional cameras can require hardware upgrades.
+- **Local failure risk:** Theft, damage, and equipment faults can affect access to locally stored recordings.
+- **Difficult remote access:** Viewing footage across locations can require additional configuration and support.
+- **Maintenance overhead:** Installers must support recording hardware alongside the cameras themselves.
+- **Fragmented administration:** Managing customers, devices, permissions, and storage becomes harder as installations grow.
+
+For CCTV providers, these constraints limit how efficiently they can expand their service. For customers, they affect whether footage is available when it matters.
+
+## The Solution: Olympus Vision—From Camera Feed to Cloud Service
+
+Arthurite Integrated designed Olympus Vision around three connected layers: an edge device at the customer’s premises, AWS infrastructure for video ingestion and storage, and application interfaces for providers and end customers.
+
+### Connecting Cameras Through an Edge Device
+
+A Raspberry Pi device acts as the bridge between compatible IP cameras and the cloud.
+
+The documented implementation uses a GStreamer pipeline to process and package camera streams before sending them to Amazon Kinesis Video Streams. AWS IoT Core supports device connectivity and management, including certificate-based authentication.
+
+This approach provides a camera-to-cloud path without relying on a traditional DVR or NVR as the recording intermediary.
+
+The completed validation includes Hikvision camera integration and simultaneous streaming from multiple cameras.
+
+### Storage That Can Follow Retention Needs
+
+The storage design uses Amazon S3 with lifecycle management to organise footage according to its age and retention requirements.
+
+Instead of treating every recording identically, the platform architecture separates active footage from longer-term archives. The planned subscription model includes retention options of seven, thirty, and ninety days.
+
+The purpose is to give providers a clearer relationship between the service a customer purchases, the footage retained, and the resources consumed.
+
+### Remote Viewing With Controlled Access
+
+Olympus Vision’s application design includes an administrator dashboard for CCTV companies and a video portal for their customers.
+
+Providers can manage accounts and camera assignments, while customers access the cameras made available to them. The delivery architecture uses Amazon CloudFront with time-limited signed URLs to control access to distributed video content.
+
+Multi-resolution playback and adaptive streaming are included in the platform scope, helping accommodate different viewing devices and connection conditions.
+
+### A Foundation for Recurring Services
+
+Olympus Vision extends the installer’s role beyond the initial equipment deployment.
+
+The product design brings together customer administration, device monitoring, storage plans, usage reporting, and subscription billing. White-label customisation is also part of the scope, allowing CCTV companies to present the service under their own identity.
+
+For providers, this creates a path from individual installations to an ongoing customer service relationship.
+
+## The Technology: An AWS Architecture for Video Workloads
+
+The documented architecture assigns different responsibilities to specialist services:
+
+| Component | Role |
+| --- | --- |
+| Raspberry Pi and GStreamer | Capture, process, and package camera streams |
+| Amazon Kinesis Video Streams | Receive video from edge devices |
+| AWS IoT Core | Support device registration, authentication, and messaging |
+| Amazon S3 | Store footage with retention and lifecycle policies |
+| AWS Lambda and Amazon API Gateway | Support processing and application workflows |
+| Amazon DynamoDB | Store metadata, device records, and assignments |
+| Amazon Cognito | Support user authentication |
+| Amazon CloudFront | Distribute video with controlled access |
+
+The wider security design includes encryption, role-based permissions, tenant isolation, and operational monitoring. Completion of those controls should be confirmed through deployment evidence and acceptance testing as the platform progresses.
+
+## The Results: What the Streaming Validation Established
+
+The Olympus Vision SOW records the following edge-integration validation results:
+
+| Validation area | Documented result |
+| --- | --- |
+| Video quality | 1080p streaming at 25 frames per second |
+| Streaming latency | Below ten seconds in the reported test |
+| Sustained operation | More than 48 hours without interruption |
+| Multi-camera operation | Five or more concurrent camera streams validated |
+| Bandwidth use | Approximately 2–4 Mbps per camera |
+
+These results establish a working foundation for moving video from cameras through the edge device to AWS.
+
+They are distinct from the broader targets in the project plan. Support for sixteen streams per edge device, large viewer populations, production availability, and projected cost savings still require their corresponding validation evidence.
+
+## What Comes Next: From Streaming Foundation to Wider Deployment
+
+The rollout plan proposes a limited beta with a small group of CCTV companies, followed by controlled expansion.
+
+That progression provides an opportunity to validate customer onboarding, storage retention, playback, billing, and operational support under real deployment conditions.
+
+AI-powered video analytics, smart search, predictive insights, and native mobile applications are identified as later enhancements. The immediate foundation is the dependable movement, storage, and retrieval of video.
+
+## Strategic Significance: A New Service Model for CCTV Companies
+
+Olympus Vision gives CCTV providers a route to managing surveillance as a connected service.
+
+The camera remains at the customer’s premises. The edge device connects it to cloud infrastructure. The provider gains a platform around which to build storage, access, and ongoing support.
+
+With its streaming MVP documented as complete, Olympus Vision has established the first part of that journey: connecting the footage a camera captures to infrastructure beyond the local recorder.

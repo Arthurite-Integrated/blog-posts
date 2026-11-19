@@ -1,0 +1,154 @@
+---
+title: "Your Website Is Fast. So Why Is It Slow in Another Country?"
+excerpt: "The launch was a success."
+date: 2026-11-18
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**Author:** Adekunle Kehinde Fisayo  
+*Web Engineer, Arthurite Integrated*
+
+The launch was a success.
+
+A Nigerian e-commerce company had spent months building its online store. Its website loaded quickly, customers could browse products without difficulty, and orders were coming in consistently.
+
+Then the business started attracting customers outside Nigeria.
+
+A customer in Lagos could open the homepage almost instantly. Someone in London experienced noticeable delays. Customers in Toronto complained that product images took too long to load, while visitors in Johannesburg occasionally struggled with slow page responses.
+
+The development team checked the servers. Everything looked healthy. There were no major application errors, and the infrastructure had enough capacity to handle incoming requests.
+
+So why was the website still slow?
+
+The answer wasn’t necessarily the server. It was the distance between the server and the customer, combined with how the website delivered its content.
+
+As businesses expand globally, they discover something important: **having a fast website doesn’t automatically mean having a fast website everywhere.**
+
+**The problem with distance**
+
+Every time someone visits a website, their browser communicates with servers to request information.
+
+That information might include HTML pages, images, stylesheets, JavaScript files, videos, and data from the application’s backend.
+
+When the server is relatively close to the visitor, these requests generally travel shorter network distances.
+
+But when a customer is thousands of kilometres away, requests may need to cross multiple networks and geographical locations before reaching the server and returning with the requested content.
+
+This introduces latency: the time it takes for data to travel between two points.
+
+Even if the application itself is well optimised, network distance can affect how quickly customers experience the website.
+
+And this matters commercially. Customers expect online stores, booking platforms, and business applications to respond quickly, regardless of where they are accessing them.
+
+The solution isn’t always to deploy another server in every country. Sometimes, it’s about delivering content more intelligently.
+
+**Bringing content closer to customers with Amazon CloudFront**
+
+One of the AWS services designed to solve this problem is **Amazon CloudFront**.
+
+CloudFront is a Content Delivery Network (CDN) that distributes content through a global network of edge locations.
+
+Instead of every visitor requesting the same image or static file directly from the original server, CloudFront can cache eligible content at locations closer to users.
+
+Let’s return to our e-commerce business.
+
+Its product images, CSS files, JavaScript, and other static assets are stored in Amazon S3. Without a CDN, customers in different countries might repeatedly request these files from the same origin.
+
+With CloudFront, the company can configure a distribution that uses its S3 bucket as an origin.
+
+When a customer requests a product image, CloudFront can serve it from an appropriate edge location if a valid cached copy is available.
+
+If the content isn’t cached, CloudFront retrieves it from the configured origin and can cache it according to the distribution’s caching rules.
+
+The result? Repeated requests for the same content can be served without travelling all the way back to the original storage location every time.
+
+CloudFront also supports dynamic content delivery, although the caching and performance benefits depend on how the application is configured.
+
+The key idea is simple: **don’t make every customer travel to your infrastructure when your infrastructure can bring content closer to them.**
+
+**But what happens when customers need to reach your application?**
+
+Caching images and static files is important, but websites do more than display content.
+
+Customers log in, submit forms, check product availability, make payments, and retrieve information from application servers.
+
+These requests often require communication with the actual application backend.
+
+This is where other AWS networking services become useful.
+
+**Amazon Route 53: Directing customers intelligently**
+
+Amazon Route 53 is AWS’s scalable Domain Name System (DNS) service.
+
+It translates domain names into the information browsers need to reach applications and supports several routing policies.
+
+For example, a business can use latency-based routing to direct users towards AWS resources that provide lower network latency based on AWS’s measurements.
+
+Route 53 can also support health checks and DNS failover configurations, helping businesses route traffic away from unhealthy endpoints when configured appropriately.
+
+This is useful when an organisation operates application infrastructure in multiple AWS Regions and wants to direct users to suitable endpoints.
+
+However, Route 53 doesn’t automatically make a single-region application global. The business must have the necessary regional infrastructure and configure its routing strategy.
+
+**AWS Global Accelerator: Improving application connectivity**
+
+Another service worth understanding is AWS Global Accelerator.
+
+Global Accelerator provides static anycast IP addresses that direct user traffic onto the AWS global network through nearby AWS edge locations.
+
+From there, traffic travels across the AWS global network towards configured application endpoints, such as Application Load Balancers, Network Load Balancers, or EC2 instances.
+
+This can improve the performance and availability of applications by optimising the network path and directing traffic to healthy endpoints.
+
+Unlike CloudFront, which is primarily used for content delivery and caching, Global Accelerator is designed to improve connectivity to applications and services.
+
+The two services solve related but different problems. A business may use both depending on its architecture.
+
+**What does a globally optimised website look like?**
+
+Let’s imagine our Nigerian e-commerce company is ready to improve its international customer experience.
+
+Its product images and static website assets are stored in Amazon S3. Amazon CloudFront sits in front of the storage origin, delivering cached content from edge locations closer to customers.
+
+Its application backend runs on AWS infrastructure. Route 53 manages the domain and directs users according to the configured routing strategy.
+
+If the business needs to improve connectivity to application endpoints across multiple Regions, AWS Global Accelerator can provide another layer of global traffic optimisation.
+
+A simplified view looks like this:
+
+**Customer → Amazon Route 53 → CloudFront / Global Accelerator → Application Infrastructure → Database**
+
+The actual architecture depends on the application. CloudFront and Global Accelerator aren’t necessarily connected in a single sequential chain; they can serve different traffic paths.
+
+The important point is that each service has a specific responsibility.
+
+CloudFront helps deliver content closer to users. Route 53 helps direct traffic through DNS. Global Accelerator improves network connectivity to application endpoints.
+
+Together, these services can help businesses build applications that serve customers across geographical boundaries more effectively.
+
+**Going global doesn’t mean duplicating everything**
+
+One common misconception is that a business must deploy its entire infrastructure in every country where it has customers.
+
+That’s not always necessary.
+
+A well-designed CDN can significantly improve the delivery of static content without requiring multiple copies of the entire application.
+
+However, businesses must consider more than geographical distance. Database location, backend processing, API response times, caching rules, security, and regional availability all influence the final experience.
+
+For example, caching a product image is straightforward. Caching a customer’s account balance or payment response requires much more care because that information is personalised and sensitive.
+
+Global performance optimisation is therefore about choosing the right architecture for each type of traffic, not simply adding more infrastructure.
+
+**Your customers shouldn’t feel the distance**
+
+The Nigerian e-commerce company from our opening story didn’t necessarily need to rebuild its entire application.
+
+It needed to rethink how its website delivered content and how international customers reached its application infrastructure.
+
+With services such as Amazon CloudFront, Route 53, and AWS Global Accelerator, businesses can reduce unnecessary network delays, improve content delivery, and build more responsive global applications.
+
+At **Arthurite Integrated**, we help businesses design and optimise AWS infrastructure for performance, availability, and growth. Whether you’re launching a new application or preparing an existing platform for international customers, the right cloud architecture can make a significant difference to how people experience your business.
+
+Because your website may be hosted in one part of the world, but your customers shouldn’t have to feel the distance.

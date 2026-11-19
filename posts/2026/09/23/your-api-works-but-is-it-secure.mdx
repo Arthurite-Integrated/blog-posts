@@ -1,0 +1,282 @@
+---
+title: "Your API Works. But Is It Secure?"
+excerpt: "Your application is running perfectly. Users can log in, retrieve their information, make payments, and perform transactions without any problems."
+date: 2026-09-23
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+API Security | Cloud Computing | AWS | Arthurite Integrated
+
+Your application is running perfectly. Users can log in, retrieve their information, make payments, and perform transactions without any problems.
+
+Your API returns `200 OK`, your frontend displays the correct data, and everything seems to be working exactly as expected.
+
+But what happens when someone decides to use your API in a way you never intended?
+
+Imagine a customer logs into an e-commerce application and views their order using this endpoint:
+
+`GET /api/orders/1042`
+
+The API returns their order details, including the products purchased, delivery address, and payment status.
+
+Everything looks fine.
+
+Then the customer changes the order ID from `1042` to `1043`.
+
+Suddenly, the API returns someone else's order information.
+
+The customer is authenticated. The request is valid. The server is running perfectly.
+
+Your API isn't broken. It is doing exactly what you programmed it to do.
+
+And that is the problem.
+
+## A Working API Is Not Necessarily a Secure API
+
+Application Programming Interfaces (APIs) allow different software systems to communicate. They connect your frontend to your backend, your application to payment gateways, and your business systems to external services.
+
+But every API endpoint also represents a potential entry point into your application.
+
+An attacker doesn't necessarily need access to your frontend to interact with your backend. They can send requests directly using tools such as Postman, curl, or custom scripts.
+
+This means hiding a button, disabling a form field, or restricting access to a page on the frontend does not automatically secure the underlying API.
+
+Security must be enforced by the backend, regardless of where the request originates.
+
+So, what should developers and businesses pay attention to when securing their APIs?
+
+## Authentication Is Not the Same as Authorization
+
+Let's return to our e-commerce example.
+
+The customer successfully logged in and received a valid authentication token.
+
+That token allows the backend to identify the customer.
+
+But does being authenticated mean they should be able to access every order in the database?
+
+Absolutely not.
+
+Authentication answers the question: "Who are you?"
+
+Authorization answers a different question: "What are you allowed to access or do?"
+
+In our earlier example, the backend may have checked whether the customer was logged in without checking whether the requested order actually belonged to them.
+
+This is an example of Broken Object Level Authorization (BOLA), a vulnerability highlighted in the OWASP API Security Top 10.
+
+A secure API must verify that the authenticated user has permission to access the specific resource being requested.
+
+For example, a customer should only be able to retrieve their own orders, while an administrator may have broader access depending on their assigned permissions.
+
+A valid token should never be treated as permission to access everything.
+
+## Never Trust Data Simply Because It Came From Your Frontend
+
+Imagine your application allows customers to update their profiles.
+
+The frontend sends the following request:
+
+```
+{
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+```
+
+The backend receives the request and updates the customer's information.
+
+But what happens if someone modifies the request and adds another field?
+
+```
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "role": "admin"
+}
+```
+
+If the backend blindly accepts every field and updates the database, the customer might be able to assign themselves administrative privileges.
+
+This type of problem can arise from mass assignment vulnerabilities and insufficient authorization controls.
+
+The solution is to explicitly define which fields a user is permitted to modify, validate incoming data, and enforce authorization on the server.
+
+The same principle applies to prices, payment amounts, account balances, product quantities, and other sensitive information.
+
+For example, an e-commerce API should not trust a product price simply because the frontend submitted it.
+
+The backend should independently retrieve and validate the authoritative price before processing the order.
+
+Your frontend provides the user experience. Your backend must enforce the rules.
+
+## What Happens When Someone Sends 100,000 Requests?
+
+Not every API attack involves stealing information.
+
+Sometimes, an attacker simply tries to overwhelm an application with requests.
+
+Imagine a login endpoint receiving thousands of requests within a few seconds.
+
+Or a customer repeatedly triggering an expensive operation that consumes database connections, processing power, or external API resources.
+
+Without appropriate safeguards, excessive requests can degrade application performance, increase infrastructure costs, or make services unavailable to legitimate customers.
+
+This is where rate limiting and request throttling become important.
+
+Rate limiting helps control how frequently clients can access specific endpoints.
+
+For example, a login endpoint may enforce stricter limits than a public product catalogue.
+
+However, rate limiting alone does not prevent every form of abuse. Authentication controls, resource limits, bot protection, and application-level validation may also be necessary.
+
+On AWS, Amazon API Gateway provides throttling capabilities, while AWS WAF can help filter requests based on configured security rules.
+
+The objective is not to block legitimate customers.
+
+It is to prevent individual clients or malicious traffic from consuming resources in ways that threaten the availability of your application.
+
+## Your API Keys Are Not Supposed to Be Public
+
+Imagine building an application that integrates with a payment gateway, email provider, or external AI service.
+
+To communicate with these services, your backend may require API keys, access tokens, or other credentials.
+
+Now imagine accidentally committing those credentials to a public GitHub repository or embedding a secret key directly inside your frontend JavaScript.
+
+Anyone who obtains the credentials may be able to use them within the permissions granted to that credential.
+
+Depending on the service, this could expose sensitive information, enable unauthorized operations, or generate unexpected charges.
+
+Sensitive credentials should never be embedded in publicly accessible frontend code.
+
+They should be managed securely, with access restricted to the applications and services that genuinely need them.
+
+AWS Secrets Manager can help organizations securely store, retrieve, and manage application secrets, including database credentials and API keys.
+
+AWS Identity and Access Management (IAM) can also help control which AWS resources and services an application is permitted to access.
+
+And where temporary credentials or IAM roles can replace long-lived access keys, they should generally be preferred.
+
+A secret is only useful as a security control if it actually remains secret.
+
+## Encryption, Input Validation, and Secure Communication
+
+API security is not limited to authentication and access control.
+
+Consider what happens when a customer sends sensitive information to your application.
+
+If communication is not properly protected, information transmitted between the client and server may be exposed to interception or modification.
+
+Using HTTPS with properly configured TLS helps protect data while it travels across networks.
+
+But encryption alone does not make an API secure.
+
+Applications must also validate incoming data, use parameterized database queries to reduce SQL injection risks, handle uploaded files safely, and avoid exposing unnecessary internal information through error messages.
+
+For example, a failed database operation should not return database credentials, detailed stack traces, or internal infrastructure information to an ordinary API consumer.
+
+Developers need enough diagnostic information to troubleshoot problems, but that information should be recorded securely rather than exposed indiscriminately to users.
+
+Security requires multiple controls working together.
+
+## How AWS Can Help Secure Your APIs
+
+AWS provides several services that can contribute to a layered API security architecture.
+
+![Demystifying Amazon API Gateway: Building Secure and Scalable APIs on AWS | by Rajat Arora | Jan, 2026 | Medium](https://images.openai.com/static-rsc-4/SZROaJRMQDQUOC1n2_pYjuw3lcd7UbCKQFtPqwjHk_swHj-yk1_2XEHtJfyRmcAHVMuMBg55tHfphm-99UKGDqx8OInJDHLICC929jNJS-_qq9576wSLWSJKsivDrhL08MQyJ4NLAB7S4BAxzCTZMYa6nIR3IkLBEevbuhtc1vc?purpose=inline)
+
+Amazon API Gateway
+
+API Gateway helps developers create, publish, manage, monitor, and secure APIs. Depending on the API type and configuration, it supports authorization mechanisms, throttling, and integration with backend services such as AWS Lambda.
+
+![[アップデート]AWS Healthの通知の管理を簡素化する「AWS管理通知」機能がGAされました | DevelopersIO](https://images.openai.com/static-rsc-4/Wr02QMmqYQaA89Jp7GF55AaFhmBM9jxpbWu47P_tI0yaq4RPebPhBvD6AyC2zrqXai4eDV_mm4JFcKMqmXjZrJ8i6maZxgodo5Ing-_NTf9BQjQBgNhPIkqV-Uq9vzBics4yfNLy5gBROYXdaV5iUkNtT_8BlMUxPqljZs_0Bgg?purpose=inline)
+
+AWS WAF
+
+AWS WAF can inspect and filter HTTP and HTTPS requests, helping protect supported API endpoints against certain malicious request patterns and excessive traffic.
+
+![5 Things About Amazon Cognito. Simplifying User Identity for Modern… | by Adith - The Data Guy | Medium](https://images.openai.com/static-rsc-4/-FqUXoFgQsrnR9s1E3VAFHLDyNOgTsDaXZG35LuaM6CMF1OyCBNORtxP_hJkA0kySrw4VAJfjkFNuYUomzgGbCVQ4trfcYTc75S_wNJhGGgJWUrN5bBkn4nwYJncbEPeeTAvDef6X0y9hZtYH5Euth-278XEWa07KOPitY9bEXo?purpose=inline)
+
+Amazon Cognito
+
+Cognito provides identity capabilities for web and mobile applications, including user authentication and token-based access mechanisms. Applications must still enforce appropriate authorization for individual resources and operations.
+
+![Paso a paso: Cómo mejorar la seguridad de tu aplicación frontend usando AWS Secret Manager, ejemplo con VueJs - DEV Community](https://images.openai.com/static-rsc-4/Jvls3f3txGPkpb21r_AZ_pEUhfEgXTcx2jih5uslh-HMFKGtsNuiGNiTdEa_FbRnQssoXq0cXXj3dN7EBSTeK4KMChcRiZA6X5ZtCec3YvClAWrbm37PTiwuDnWY6sCOLVryAeb-P2efcgbxzBj__n0Yw-0ThqJzOQYWGWCqxN0?purpose=inline)
+
+AWS Secrets Manager
+
+Secrets Manager helps protect and manage sensitive application credentials, reducing the need to hardcode secrets in application source code.
+
+![Setup AWS CloudWatch Agent On-Premise Server — Part 1 | by Budi Arsana | Medium](https://images.openai.com/static-rsc-4/t_YH2zlUvd92Dj0JkoLH0ynYevooP2YRsZum-ynUWLocQnGaxpaITbWpf_dC0R-Fr8pl5GFwlZhYoFP1f3hTJizageQRbzw8-_18xQrwBv6C_93JbGn8zPODoweVp4Ouc8vjo5qEkSh8xcctrCPlIJJMwtAnv0gQfxxNNEuJbl4?purpose=inline)
+
+Amazon CloudWatch
+
+CloudWatch helps teams monitor application and infrastructure behaviour through metrics, logs, dashboards, and alarms. It can help identify unusual request volumes, elevated error rates, and other indicators that require investigation.
+
+These services can help strengthen an application's security posture, but they do not replace secure application development.
+
+For example, AWS WAF cannot automatically determine whether a particular customer owns a specific order in your database.
+
+That authorization decision must still be enforced by your application.
+
+Similarly, enabling authentication does not automatically prevent insecure business logic, excessive data exposure, or unsafe database operations.
+
+AWS provides security capabilities. Your application must still be designed to use them correctly.
+
+## Security Should Be Part of Development, Not an Afterthought
+
+One of the most expensive mistakes businesses can make is treating security as something to address only after an application has been deployed.
+
+By then, sensitive information may already be exposed, permissions may be overly broad, and insecure application logic may have become deeply embedded in the system.
+
+A better approach is to integrate security throughout the development lifecycle.
+
+This means reviewing access controls when designing endpoints, validating requests during development, testing authorization boundaries before deployment, protecting secrets, monitoring production activity, and regularly updating application dependencies.
+
+It also means recognizing that security is an ongoing process.
+
+New features introduce new endpoints. New integrations introduce new dependencies. Business requirements change, and vulnerabilities may be discovered in existing software.
+
+An API that was reviewed six months ago may need another assessment after significant changes.
+
+Security is not something you configure once and forget.
+
+## How Arthurite Integrated Can Help
+
+For many businesses, APIs are the foundation of their digital operations.
+
+An e-commerce platform relies on APIs to process orders and payments. A fintech application uses APIs to connect financial services. A mobile application depends on APIs to authenticate users and exchange information with its backend.
+
+As these systems grow, securing them becomes increasingly important.
+
+At Arthurite Integrated, we help businesses design, develop, deploy, and manage modern applications and cloud infrastructure using AWS technologies.
+
+Whether you're an SME building your first digital platform or an established organization managing complex application environments, we can help you approach API security as part of your overall technology architecture.
+
+This can include designing secure backend APIs, implementing authentication and authorization, integrating appropriate AWS security services, managing application credentials, configuring monitoring, reviewing existing application architectures, and improving infrastructure security.
+
+Our approach is to understand the business requirements, identify potential risks, and implement security controls appropriate for the application and its operating environment.
+
+Because building an API that works is only part of the job.
+
+Building an API that protects your customers, your data, and your business is just as important.
+
+## Conclusion: Your API Returns 200 OK. But Should It?
+
+An API can respond successfully to every request and still have serious security vulnerabilities.
+
+It might return information to the wrong user.
+
+It might accept data that should never have been modified.
+
+It might expose credentials, process unauthorized operations, or allow excessive requests to overwhelm the application.
+
+The HTTP status code alone cannot tell you whether your API is secure.
+
+The real questions are whether the caller is authenticated, whether they are authorized to perform the requested action, whether the data is properly validated, and whether the application can protect sensitive information while remaining available to legitimate users.
+
+With secure development practices, appropriate AWS services, and a well-designed cloud architecture, businesses can build APIs that support growth without treating security as an afterthought.
+
+A working API does what the developer intended. A secure API makes sure the caller is actually allowed to do it.

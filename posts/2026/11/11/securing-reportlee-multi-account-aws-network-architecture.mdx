@@ -1,0 +1,443 @@
+---
+title: "Securing Multi-Account Cloud Architecture: How Arthurite Integrated Designed Private AWS Connectivity for the Reportlee Reporting Platform"
+excerpt: "Modern reporting platforms require more than reliable application development. They need secure infrastructure, controlled communication between services, scalable network architecture and the ability to protect sensitiv…"
+date: 2026-11-11
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**By: Dauda Lawal – Web Developer**
+
+## **Introduction**
+
+Modern reporting platforms require more than reliable application development. They need secure infrastructure, controlled communication between services, scalable network architecture and the ability to protect sensitive business information across multiple environments.
+
+As organizations increasingly depend on digital reporting systems to manage operational information, financial data and performance records, the infrastructure supporting these platforms must provide reliable access while maintaining strict security boundaries.
+
+Reportlee is a reporting platform that enables organizations to prepare and submit weekly and monthly reports. Built and deployed by Arthurite Integrated on Amazon Web Services (AWS), the platform operates across three Virtual Private Clouds (VPCs) distributed across multiple AWS accounts.
+
+As part of the platform's network architecture, Arthurite designed a multi-account connectivity model that separates the user-facing, application and data layers while enabling approved services to communicate privately.
+
+The architecture uses AWS PrivateLink to establish private connectivity between VPCs and AWS accounts without requiring broad network peering or exposing internal services to the public internet.
+
+An Application Load Balancer (ALB) provides the user-facing entry point, while Network Load Balancers (NLBs), interface endpoints and gateway endpoints support controlled communication between the platform's different infrastructure layers.
+
+This approach establishes a secure and segmented network foundation for Reportlee, demonstrating how AWS networking services can support modern multi-account application architectures.
+
+## **The Challenge: Securing Communication Across Multiple AWS Accounts and VPCs**
+
+![aws](https://arthuriteintegrated.com/wp-content/uploads/2026/11/image-5.png)
+
+aws
+
+Operating an application across multiple AWS accounts introduces important networking and security considerations. While account separation provides administrative and security boundaries, services distributed across different VPCs still need reliable ways to communicate.
+
+For Reportlee, the network architecture needed to support three distinct infrastructure layers while preventing unnecessary access between them.
+
+Several requirements shaped the design.
+
+### **1. Separating Application Infrastructure into Independent Network Layers**
+
+The platform required a clear separation between its user-facing environment, application services and data or shared-service infrastructure.
+
+Placing every component within a single VPC could create broader network access than necessary and make it more difficult to enforce security boundaries.
+
+Arthurite therefore designed a three-VPC architecture, with each VPC assigned a specific responsibility:
+
+- **VPC 1 – Edge and Web Tier:** Hosts the user-facing entry point and Application Load Balancer.
+- **VPC 2 – Application and Reporting Tier:** Hosts application and reporting services.
+- **VPC 3 – Data and Shared Services Tier:** Hosts data-related infrastructure and shared platform services.
+
+This separation provides a structured approach to managing application communication and controlling access between infrastructure layers.
+
+### **2. Establishing Secure Cross-Account Connectivity**
+
+Services operating across different AWS accounts need a secure communication mechanism.
+
+Traditional VPC peering can establish private connectivity between networks, but it creates broader network-level connectivity than may be necessary when an application only needs access to specific services.
+
+Reportlee required a more controlled model in which one VPC could access an approved service in another VPC without gaining access to the provider's entire network.
+
+This requirement informed the decision to use AWS PrivateLink.
+
+### **3. Restricting Access to Approved Services**
+
+The architecture needed to ensure that each service was accessible only to approved consumer VPCs and AWS accounts.
+
+This required an access-control mechanism that could restrict which accounts were permitted to establish connections to endpoint services.
+
+Without appropriate controls, exposing an endpoint service to an unintended AWS account could create unnecessary security risks.
+
+Arthurite therefore incorporated allowed-principal configurations, endpoint policies and connection acceptance controls into the proposed architecture.
+
+### **4. Maintaining Highly Available Application Access**
+
+Reportlee requires a reliable entry point for users accessing the reporting platform.
+
+A network architecture that depends on a single Availability Zone could introduce unnecessary service disruption if that zone experiences an outage.
+
+The solution therefore required an Application Load Balancer deployed across at least two Availability Zones.
+
+This provides a foundation for distributing incoming requests across healthy application targets and supporting availability at the user-facing layer.
+
+### **5. Keeping AWS Service Traffic Private**
+
+The platform also required private access to AWS services such as Amazon S3.
+
+Routing this traffic through public internet or NAT-based paths would introduce additional network dependencies and potentially increase exposure.
+
+Arthurite incorporated VPC gateway and interface endpoints to provide private access to supported AWS services directly from the respective VPCs.
+
+### **6. Improving Network Visibility and Operational Monitoring**
+
+With services distributed across multiple accounts and VPCs, identifying connectivity issues requires centralized visibility into network activity and service health.
+
+The architecture needed traffic logging, endpoint monitoring, load balancer health checks and alerts to help identify unexpected connections and infrastructure problems.
+
+These requirements established the foundation for Arthurite's multi-account AWS network design.
+
+## **The Solution: Building a Secure Multi-Account AWS Architecture with PrivateLink**
+
+Arthurite Integrated designed a segmented AWS network architecture that enables Reportlee's infrastructure components to communicate through controlled private connections.
+
+The architecture consists of three VPCs distributed across multiple AWS accounts, with each VPC responsible for a specific platform layer.
+
+Users access Reportlee through an Application Load Balancer deployed in the edge or web VPC. This provides the primary entry point into the platform.
+
+When a service in one VPC needs to communicate with a service hosted in another VPC, AWS PrivateLink provides the connectivity mechanism.
+
+The service provider exposes the required application service through a PrivateLink endpoint service backed by a Network Load Balancer.
+
+The consumer VPC then creates an interface endpoint to access that service privately.
+
+This model limits communication to the specific service exposed by the provider rather than creating broad network connectivity between the two VPCs.
+
+The architecture also incorporates gateway and interface endpoints to provide private access to supported AWS services.
+
+Security groups, endpoint policies, allowed-principal configurations, VPC Flow Logs and AWS CloudTrail provide additional security and operational controls.
+
+Together, these components establish a multi-account architecture that prioritizes network isolation, controlled service access and private communication.
+
+## **Core AWS Services and Platform Capabilities**
+
+### **1. Amazon VPC for Multi-Account Network Segmentation**
+
+Amazon Virtual Private Cloud provides the foundation for Reportlee's network architecture.
+
+Arthurite designed three separate VPCs, each responsible for a different platform layer.
+
+The edge VPC provides the user-facing entry point, the application VPC hosts application and reporting services, while the data VPC contains data and shared services.
+
+Each VPC uses its own subnet and routing configuration across Availability Zones.
+
+This separation establishes independent network boundaries and provides greater control over communication between application components.
+
+It also allows each infrastructure layer to maintain its own security policies and connectivity requirements.
+
+### **2. AWS PrivateLink for Secure Cross-Account Connectivity**
+
+[AWS PrivateLink](https://aws.amazon.com/privatelink/) is one of the most important components of the Reportlee network architecture.
+
+It enables private connectivity between VPCs and AWS accounts without requiring the networks to be connected through traditional VPC peering.
+
+The architecture uses two main components:
+
+**Endpoint services**
+
+The service provider exposes an application service through an AWS PrivateLink endpoint service.
+
+The endpoint service sits behind a Network Load Balancer, which distributes incoming connections to the appropriate service targets.
+
+The provider can specify which AWS accounts are allowed to connect.
+
+Where required, connection requests can also be configured for manual acceptance before access is established.
+
+**Interface endpoints**
+
+The consumer creates an interface endpoint inside its own VPC.
+
+This endpoint provides private access to the service exposed by the provider.
+
+The consumer communicates with the specific service through the endpoint without gaining general access to the provider's VPC.
+
+This service-level connectivity model is particularly useful for multi-account applications where different infrastructure layers need to communicate without sharing their entire network environments.
+
+Another important advantage is that PrivateLink does not depend on routing between the VPC address ranges. Consequently, overlapping CIDR ranges do not inherently prevent PrivateLink connectivity, although the actual address plan must still be validated.
+
+### **3. Network Load Balancer for Private Service Exposure**
+
+Network Load Balancer supports the provider side of the PrivateLink architecture.
+
+Each exposed endpoint service uses an NLB as its front end.
+
+The NLB receives incoming connections from consumer interface endpoints and distributes traffic to the relevant service targets.
+
+This allows application services to be exposed privately without making their underlying infrastructure publicly accessible.
+
+Multi-AZ deployment and target health monitoring also provide a foundation for improving service availability.
+
+By combining NLBs with PrivateLink, Arthurite designed a controlled method of exposing specific services across AWS accounts.
+
+### **4. Application Load Balancer for User-Facing Application Access**
+
+The Reportlee platform uses an Application Load Balancer as its user-facing entry point.
+
+The ALB receives incoming application requests and distributes them across healthy targets within the web or application tier.
+
+The proposed architecture places the load balancer across at least two Availability Zones.
+
+This provides an architecture designed to maintain application access if an individual Availability Zone experiences an issue.
+
+Amazon CloudWatch monitoring can track important indicators such as healthy host count and HTTP 5xx errors.
+
+These metrics provide visibility into application availability and help identify potential issues affecting users.
+
+### **5. VPC Gateway Endpoints and Interface Endpoints for Private AWS Service Access**
+
+In addition to cross-account service connectivity, Reportlee requires private access to AWS services.
+
+Arthurite incorporated gateway and interface endpoints into the network design.
+
+**Gateway endpoints** provide private connectivity to supported AWS services such as Amazon S3 without requiring traffic to pass through the public internet or NAT gateways.
+
+**Interface endpoints** use AWS PrivateLink to establish private connectivity to supported AWS services and privately exposed application services.
+
+This architecture helps reduce unnecessary internet exposure and provides more controlled communication between the application environment and AWS-managed services.
+
+Endpoint policies can further restrict access to approved resources, such as specific Amazon S3 buckets.
+
+### **6. Security Groups and Endpoint Policies for Access Control**
+
+Network isolation requires more than separating infrastructure into different VPCs. Organizations must also control which resources can communicate and what actions those connections can perform.
+
+Arthurite incorporated security groups and endpoint policies into the proposed architecture.
+
+Security groups control the traffic permitted to interface endpoints and load balancers.
+
+Endpoint policies provide an additional authorization layer for supported gateway and interface endpoint access.
+
+For PrivateLink, allowed-principal configurations determine which AWS accounts can establish connections to endpoint services.
+
+Where required, manual connection acceptance provides another approval checkpoint.
+
+These controls help ensure that access is restricted to approved consumers and required application traffic.
+
+### **7. Amazon CloudWatch, VPC Flow Logs and AWS CloudTrail for Monitoring**
+
+Monitoring and auditing are important for operating a distributed multi-account environment.
+
+Arthurite incorporated several AWS services to support network visibility and operational monitoring.
+
+**Amazon CloudWatch**
+
+CloudWatch provides metrics, dashboards and alarms for monitoring infrastructure health.
+
+The proposed monitoring scope includes:
+
+- Application Load Balancer healthy host count.
+- HTTP 5xx error rates.
+- Network Load Balancer target health.
+- Endpoint connection status.
+- Unexpected endpoint connection requests.
+- Cross-VPC request latency.
+
+**Amazon VPC Flow Logs**
+
+VPC Flow Logs record information about IP traffic flowing through network interfaces within the VPC.
+
+This information supports network troubleshooting, security investigations and the identification of unexpected or rejected traffic.
+
+The architecture calls for Flow Logs to be enabled across all three VPCs.
+
+**AWS CloudTrail**
+
+CloudTrail records AWS account activity and API operations.
+
+Enabling CloudTrail across the participating AWS accounts provides an audit trail of infrastructure changes and service-related actions.
+
+Together, these services provide a monitoring and auditing foundation for the Reportlee network environment.
+
+## **Security Architecture: Protecting Application and Data Infrastructure**
+
+Security is central to the Reportlee multi-account architecture.
+
+The design follows a layered security approach that combines network segmentation, controlled service exposure, private connectivity and activity monitoring.
+
+Several controls define this approach.
+
+**Account-level access restrictions:** Each PrivateLink endpoint service maintains an explicit list of AWS accounts permitted to connect.
+
+**Manual connection acceptance:** Where required, endpoint connection requests must be approved before becoming active.
+
+**Private application and data tiers:** Application and data resources are designed without public IP addresses. The Application Load Balancer is the only component intended to be internet-facing.
+
+**Restricted network traffic:** Security groups on interface endpoints and load balancers permit only the required ports and approved sources.
+
+**Endpoint-level authorization:** Endpoint policies restrict access to approved AWS resources, including designated S3 buckets.
+
+**Network activity monitoring:** VPC Flow Logs capture network traffic information, while CloudTrail provides account-level API auditing.
+
+**Encryption:** The architecture specifies TLS encryption for data in transit and AWS Key Management Service (AWS KMS) for encryption at rest, subject to confirmation of the final implementation.
+
+This layered model helps reduce unnecessary network exposure while maintaining the connectivity required by the reporting platform.
+
+## **Traffic Management and Monitoring: Maintaining Service Health**
+
+A multi-account architecture requires continuous monitoring of the connections between its different infrastructure layers.
+
+Arthurite incorporated specific monitoring indicators to help identify potential failures and unauthorized access attempts.
+
+The proposed monitoring framework covers five major areas.
+
+**1. Application Entry Point Monitoring**
+
+CloudWatch monitors the Application Load Balancer's healthy host count and HTTP 5xx errors.
+
+Unhealthy targets or unusual increases in application errors can trigger alerts for investigation.
+
+**2. Private Endpoint Service Monitoring**
+
+Network Load Balancer target health and endpoint connection status provide visibility into the availability of exposed services.
+
+Unhealthy targets can indicate problems affecting dependent application components.
+
+**3. Endpoint Connection Monitoring**
+
+Pending or rejected endpoint connection requests are monitored to identify unexpected connection attempts.
+
+This is particularly important in a multi-account environment where service access must remain restricted to approved consumers.
+
+**4. Network Traffic Monitoring**
+
+VPC Flow Logs provide visibility into rejected network traffic.
+
+Unexpected increases in rejected flows can indicate configuration problems or suspicious connectivity activity.
+
+**5. Cross-VPC Latency Monitoring**
+
+Monitoring cross-VPC request times provides a way to evaluate communication performance between application services.
+
+Together, these monitoring capabilities provide a foundation for identifying connectivity problems, service degradation and unexpected network activity.
+
+## **Project Implementation: A Structured Four-Phase Approach**
+
+Arthurite structured the Reportlee network design and implementation into four phases.
+
+This approach allows the architecture to be established progressively, with specific deliverables and acceptance criteria at each stage.
+
+### **Phase 1: Network Design**
+
+The first phase focuses on defining the multi-account network architecture.
+
+Key activities include agreeing on the AWS account structure, VPC layout, network address plan and connectivity model.
+
+The PrivateLink endpoint service map and access-control model are also documented.
+
+Expected deliverables include:
+
+- AWS account and VPC architecture.
+- Network address plan.
+- PrivateLink endpoint service map.
+- Cross-account access model.
+- Approved network architecture documentation.
+
+### **Phase 2: Foundation Build**
+
+The second phase establishes the underlying AWS network infrastructure.
+
+This includes creating the required VPCs, subnets and security configurations.
+
+The Application Load Balancer, gateway endpoints, VPC Flow Logs and CloudTrail configurations are also part of the foundation build.
+
+The objective is to establish the segmented infrastructure required for the platform's application and data layers.
+
+### **Phase 3: Private Connectivity**
+
+The third phase focuses on establishing private communication between the different VPCs and AWS accounts.
+
+Arthurite's proposed activities include:
+
+- Creating Network Load Balancers.
+- Configuring PrivateLink endpoint services.
+- Creating consumer-side interface endpoints.
+- Defining approved AWS account principals.
+- Configuring endpoint connection acceptance where required.
+- Validating private DNS and endpoint connectivity.
+
+This phase is particularly important because it ensures that each consumer can reach only the services explicitly exposed to it.
+
+### **Phase 4: Testing, Go-Live and Handover**
+
+The final phase focuses on validating the architecture and preparing the environment for operational handover.
+
+Testing covers cross-VPC service access, network isolation, Availability Zone resilience, private AWS service connectivity and monitoring.
+
+The project also includes preparing operational runbooks, documenting the infrastructure and providing training to the customer's technical team.
+
+The handover package is designed to include:
+
+- As-built architecture diagrams and configuration records.
+- Operational runbooks and incident response procedures.
+- Access to infrastructure-as-code repositories and deployment pipelines.
+- Monitoring dashboards and alarm ownership records.
+- Training materials and available session recordings.
+- Test results and acceptance certificates.
+- Outstanding issues with assigned owners and agreed resolution dates.
+
+This structured delivery approach provides a clear framework for validating the architecture and transferring operational responsibility.
+
+## **Business and Technical Value**
+
+The Reportlee multi-account network architecture addresses important requirements associated with securing and operating modern cloud-based reporting platforms.
+
+**Improved network segmentation:** Separating the platform into three VPCs creates distinct network boundaries for user-facing, application and data services.
+
+**Secure cross-account communication:** AWS PrivateLink provides service-level connectivity without requiring broad network peering between the participating VPCs.
+
+**Controlled service access:** Allowed principals, endpoint policies and connection acceptance controls provide mechanisms for restricting access to approved AWS accounts and resources.
+
+**Improved application availability:** A multi-AZ Application Load Balancer provides a resilient user-facing entry point and distributes requests across healthy targets.
+
+**Reduced internet exposure:** Gateway and interface endpoints allow supported AWS service traffic to remain on private connectivity paths rather than relying on public internet or NAT access.
+
+**Improved operational visibility:** CloudWatch, VPC Flow Logs and CloudTrail provide monitoring, network traffic records and account-level auditing.
+
+**Scalable multi-account architecture:** The service-oriented connectivity model allows additional approved consumer environments to access specific shared services without requiring full network connectivity.
+
+These capabilities establish a foundation for operating Reportlee across multiple AWS accounts while maintaining clear security and connectivity boundaries.
+
+## **AWS Competency Alignment**
+
+The Reportlee engagement demonstrates Arthurite Integrated's capabilities in designing secure and segmented AWS network architectures for multi-account application environments.
+
+The solution brings together several important areas of cloud engineering:
+
+- **Multi-Account Cloud Architecture:** Structuring application infrastructure across multiple AWS accounts and VPCs.
+- **AWS Networking:** Designing VPC environments, subnet configurations, load balancing and private service connectivity.
+- **Cross-Account Connectivity:** Implementing AWS PrivateLink endpoint services and interface endpoints.
+- **Cloud Security:** Applying security groups, endpoint policies, allowed principals and controlled service access.
+- **High Availability:** Designing multi-Availability Zone application entry points and monitoring service health.
+- **Cloud Observability:** Integrating CloudWatch, VPC Flow Logs and CloudTrail for monitoring and auditing.
+- **Infrastructure Operations:** Preparing deployment documentation, operational runbooks, monitoring dashboards and handover materials.
+
+By combining these capabilities, Arthurite demonstrates how AWS-native networking services can help organizations build secure, maintainable and scalable cloud applications.
+
+## **Conclusion: Building Secure Connectivity for Modern Cloud Applications**
+
+As organizations increasingly adopt cloud-based reporting platforms, the network architecture supporting these applications becomes just as important as the application itself.
+
+A modern reporting platform must provide reliable user access, secure communication between application components and strong controls over sensitive data and shared services.
+
+Through the Reportlee platform, Arthurite Integrated demonstrates an approach to addressing these requirements using a multi-account AWS architecture built around network segmentation and AWS PrivateLink.
+
+By separating the platform into three VPCs and using endpoint services, interface endpoints, load balancing and AWS-native security controls, the architecture provides a foundation for private service communication without exposing internal application and data layers to unnecessary network access.
+
+This approach demonstrates the value of designing cloud infrastructure around clear security boundaries, controlled connectivity and operational visibility.
+
+**Looking to build a secure multi-account AWS environment?**
+
+Arthurite Integrated helps organizations design and implement secure AWS architectures, private cloud connectivity, network segmentation and scalable cloud infrastructure.
+
+Whether you are building a new cloud application, modernizing an existing platform or connecting services across multiple AWS accounts, our team can help you develop an architecture aligned with your technical and business requirements.
+
+Visit [Arthurite Integrated](https://arthuriteintegrated.com/) to explore our cloud solutions and discuss your next cloud infrastructure project.

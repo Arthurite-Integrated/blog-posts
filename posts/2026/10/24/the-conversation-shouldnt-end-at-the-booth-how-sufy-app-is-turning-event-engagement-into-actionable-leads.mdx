@@ -1,0 +1,91 @@
+---
+title: "The Conversation Shouldn’t End at the Booth: How Sufy App Is Turning Event Engagement Into Actionable Leads"
+excerpt: "A promising conversation at an exhibition can last just a few minutes. Turning it into a business opportunity takes longer."
+date: 2026-10-24
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+A promising conversation at an exhibition can last just a few minutes. Turning it into a business opportunity takes longer.
+
+Someone has to capture the contact details, remember what the prospect needed, decide how urgently to respond, and make sure the follow-up actually happens. Meanwhile, the next visitor is already waiting.
+
+That gap between a good conversation and a useful sales record is the problem Sufy App was built to address.
+
+Developed by Arthurite Integrated, Sufy brings voice capture, AI-assisted lead extraction, and pipeline visibility into a single workflow—supported by an AWS serverless foundation.
+
+## When Notes Become a Follow-Up Problem
+
+Sufy’s project brief identified three connected challenges: delayed transcription, missing priority context, and inconsistent follow-up.
+
+For representatives working on a busy event floor, detailed data entry competes with the conversations they are there to have. For sales managers, incomplete notes make it harder to understand which opportunities deserve attention first.
+
+The goal was to make capturing an interaction easier while giving the team a structured record it could act on.
+
+That meant designing for two different experiences: a representative using a smartphone at an event, and a manager reviewing the resulting pipeline.
+
+## From Audio to a Structured Opportunity
+
+Sufy supports audio uploads and structured form entries through a Next.js web application.
+
+Its AI-assisted processing extracts details such as a prospect’s name, company, and area of interest, then assigns a high, medium, or low priority. Those records appear in a Kanban pipeline, giving the sales team a shared view of captured opportunities.
+
+The requirements documentation records audio ingestion and AI extraction as implemented, with the pipeline interface and its refresh behaviour verified.
+
+For the representative, the intended workflow reduces the need to reconstruct every interaction later. For the manager, it creates a clearer starting point for assigning attention and tracking progress.
+
+## Inside Sufy’s AWS Architecture
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/10/image-10-1024x813.png)
+
+*Sufy’s reference architecture connects event capture with authenticated APIs, asynchronous audio processing, AI extraction, and centralised lead storage.*
+
+AWS Amplify hosts the web application, with Amazon Cognito handling user authentication. Requests pass through Amazon API Gateway to Python AWS Lambda functions that perform backend processing.
+
+Amazon S3 stores uploaded audio, while MongoDB Atlas stores lead records and application data. The supplied diagram illustrates an asynchronous voice-processing path using Amazon Transcribe, EventBridge, and a transcript-processing Lambda function, with Google Gemini extracting structured information.
+
+The design also includes AWS Secrets Manager for integration credentials, IAM roles for service permissions, and AWS CloudTrail for AWS activity logging.
+
+These components separate the user interface, processing, storage, and operational controls, allowing the team to develop and manage each part of the workflow more deliberately.
+
+## Giving Follow-Up a Deadline
+
+Capturing a lead is only the beginning. Sufy’s next layer addresses what happens when a promising opportunity sits untouched.
+
+The project defines a 24-hour follow-up rule for high-priority leads. An hourly EventBridge schedule triggers backend logic that checks for overdue records, with Amazon SES providing the email notification mechanism.
+
+The delivery checklist marks the scheduled checks and overdue-lead logic as verified. Email configuration is established for sandbox testing, while production email access and final end-to-end sign-off remain outstanding.
+
+That distinction matters: the accountability workflow has been built, but unrestricted production email delivery is still part of the remaining launch work.
+
+## Making Deployment Repeatable
+
+Arthurite’s engineering work also focused on how the platform would be delivered and maintained.
+
+AWS CDK defines the infrastructure in code, supporting repeatable deployment. GitHub integration triggers Amplify builds for the frontend, while the operational documentation establishes monitoring routines, incident troubleshooting, and escalation responsibilities.
+
+The team also resolved authentication-related browser errors and verified the API’s handling of unauthorised requests. These changes support a more dependable experience when users sign in and retrieve their pipeline.
+
+## What Has Been Delivered
+
+The project records confirm several completed milestones:
+
+- **Core AWS infrastructure deployed** through AWS CDK.
+- **User authentication and API access controls verified.**
+- **Frontend deployment connected to GitHub through Amplify.**
+- **Audio ingestion and AI lead extraction implemented.**
+- **Kanban pipeline functionality verified.**
+- **Scheduled overdue-lead checks deployed and verified.**
+- **CloudTrail audit logging established with protected log storage.**
+
+These are delivery milestones. Improvements in conversion, response time, or administrative effort will need to be measured as the platform moves through launch and adoption.
+
+## Building a Better Handoff From Conversation to Action
+
+Sufy’s story starts with a familiar sales problem: useful conversations can lose momentum when the information around them is difficult to capture or follow up.
+
+Its completed foundation brings capture, structured lead information, and pipeline visibility together. The remaining launch work focuses on completing the notification loop and production readiness.
+
+The ambition is straightforward: help teams leave an event with opportunities they can act on, and a clearer process for acting on them.
+
+**Arthurite Integrated designs and builds cloud applications that connect business workflows with practical AI capabilities. Contact our team to explore how AWS and AI can support your next product.**

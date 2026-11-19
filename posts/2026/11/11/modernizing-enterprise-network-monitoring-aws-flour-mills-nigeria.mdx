@@ -1,0 +1,215 @@
+---
+title: "Modernizing Enterprise Network Monitoring: How Arthurite Integrated Designed an AWS-Based Hybrid Monitoring Solution for Flour Mills of Nigeria"
+excerpt: "For large enterprises operating across complex network environments, maintaining visibility into network performance, device availability and connectivity is essential to business continuity. As infrastructure expands, t…"
+date: 2026-11-11
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**By: Dauda Lawal – Web Developer**
+
+**Introduction**
+
+For large enterprises operating across complex network environments, maintaining visibility into network performance, device availability and connectivity is essential to business continuity. As infrastructure expands, traditional on-premises monitoring solutions can become increasingly challenging to manage, particularly when organizations need centralized visibility, secure remote connectivity and more flexible monitoring capabilities.
+
+Flour Mills of Nigeria Plc, one of Nigeria's established industrial enterprises, relied on an on-premises SolarWinds platform to monitor its network infrastructure. To explore a more flexible and cloud-based approach, the organization engaged Arthurite Integrated to design and implement an AWS-based network monitoring solution.
+
+The engagement focused on connecting Flour Mills' on-premises network infrastructure to Amazon Web Services (AWS) through encrypted Site-to-Site VPN connectivity. The proposed architecture would centralize network metrics and logs in AWS, introduce CloudWatch dashboards and alarms, and provide automated notifications to the network team through Amazon Simple Notification Service (SNS).
+
+Delivered as a proof of concept between May and June 2025, the engagement demonstrated an architectural approach to modernizing enterprise network monitoring through hybrid cloud connectivity and AWS-native monitoring services.
+
+## **The Challenge: Managing Enterprise Network Visibility Across On-Premises Infrastructure**
+
+Before the engagement, Flour Mills of Nigeria used SolarWinds as its primary network monitoring platform. Although the platform provided network visibility, the organization wanted to explore an alternative architecture that could leverage AWS infrastructure for centralized monitoring, alerting and secure connectivity.
+
+The engagement identified several important technical and operational requirements.
+
+**1. Limited flexibility of an on-premises monitoring architecture**
+
+With monitoring hosted within the existing environment, the organization wanted to explore how AWS could provide a centralized platform for collecting and managing network performance information.
+
+**2. Secure connectivity between on-premises infrastructure and AWS**
+
+The monitoring architecture needed to communicate with network devices across the customer's sites without exposing monitoring traffic to the public internet. This required encrypted Site-to-Site VPN connectivity and an appropriate routing design.
+
+**3. Centralized monitoring and alert management**
+
+The organization needed a solution capable of collecting network device health information, performance metrics and logs in a centralized environment. It also required dashboards and automated alerts to help the network team identify potential issues.
+
+**4. Secure credential management**
+
+Device credentials and collector secrets needed to be stored securely rather than embedded in application code or configuration files.
+
+**5. Connectivity resilience**
+
+The proposed architecture needed to account for VPN tunnel failures. Losing one tunnel should not automatically interrupt monitoring connectivity.
+
+These requirements established the foundation for Arthurite's hybrid network monitoring architecture.
+
+## **The Solution: Building a Hybrid Network Monitoring Architecture on AWS**
+
+Arthurite Integrated designed an AWS-based monitoring environment that connects the customer's existing network infrastructure to a dedicated monitoring environment in AWS.
+
+The architecture uses AWS Site-to-Site VPN to establish encrypted connectivity between the customer's network edge and AWS. Within AWS, a monitoring Virtual Private Cloud (VPC) provides the environment for hosting a Logstash collector on Amazon Elastic Compute Cloud (Amazon EC2).
+
+The collector receives network device information through the VPN connection and forwards the collected metrics and logs to Amazon CloudWatch. CloudWatch provides centralized monitoring through dashboards, metrics, log management and alarms.
+
+When monitoring thresholds are breached, Amazon SNS delivers notifications to the network team. AWS Secrets Manager provides secure storage for collector and device credentials, while AWS Identity and Access Management (IAM) controls access to the monitoring infrastructure.
+
+This architecture establishes a hybrid monitoring model that combines existing enterprise network infrastructure with AWS-native cloud services.
+
+## **Core AWS Services and Platform Capabilities**
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/11/image-4.png)
+
+### **1. AWS Site-to-Site VPN for Secure Hybrid Connectivity**
+
+The foundation of the solution is AWS Site-to-Site VPN, which establishes encrypted communication between Flour Mills' on-premises network and its AWS monitoring environment.
+
+Rather than exposing monitoring traffic directly to the internet, the VPN provides a secure communication path between the customer's network edge and AWS.
+
+The connectivity design also accounts for tunnel resilience. Each Site-to-Site VPN connection is designed with two tunnels, providing an architecture that can support connectivity failover if one tunnel becomes unavailable.
+
+This approach helps establish secure hybrid connectivity while limiting changes to the customer's existing production routing beyond the agreed VPN peering arrangements.
+
+### **2. Amazon VPC for an Isolated Monitoring Environment**
+
+Arthurite designed a dedicated Amazon Virtual Private Cloud (Amazon VPC) to host the monitoring infrastructure.
+
+The VPC provides the network foundation for the AWS-based monitoring environment, including private subnets, route tables and security groups.
+
+This separation allows monitoring resources to operate within a controlled network environment while maintaining connectivity with the customer's on-premises infrastructure.
+
+Security groups are configured to restrict access to approved monitoring traffic originating from the customer's network address ranges.
+
+### **3. Amazon EC2 and Logstash for Network Data Collection**
+
+At the centre of the data collection architecture is Logstash, hosted on Amazon EC2.
+
+Logstash serves as the collector responsible for receiving network device information arriving through the VPN connection.
+
+This provides a central collection point for network metrics and logs before they are published to Amazon CloudWatch.
+
+By introducing a dedicated collector within AWS, the architecture creates a bridge between the customer's existing network devices and AWS monitoring services.
+
+### **4. Amazon CloudWatch for Centralized Monitoring and Visibility**
+
+Amazon CloudWatch provides the central monitoring layer of the proposed architecture.
+
+Arthurite used CloudWatch dashboards, metrics, logs and alarms to reproduce key monitoring capabilities previously available through SolarWinds.
+
+The monitoring scope covers several important areas:
+
+- **Device availability:** Monitoring the reachability of network devices.
+- **Interface utilization:** Tracking incoming and outgoing network bandwidth.
+- **Device health:** Monitoring CPU and memory utilization.
+- **VPN tunnel status:** Observing tunnel availability and connectivity conditions.
+- **Network logs:** Collecting syslog events and identifying critical patterns.
+
+These capabilities provide the foundation for centralized network visibility and help the network team monitor infrastructure conditions from AWS.
+
+### **5. Amazon SNS for Automated Network Alerts**
+
+Monitoring becomes more valuable when teams receive timely notifications about potential infrastructure problems.
+
+To support this requirement, Arthurite incorporated Amazon Simple Notification Service (Amazon SNS) into the monitoring architecture.
+
+CloudWatch alarms trigger SNS notifications when configured monitoring thresholds are breached. These notifications are delivered to the designated network team recipients through the configured notification channels.
+
+This approach reduces dependence on continuously checking monitoring dashboards and provides a structured notification mechanism for network events.
+
+### **6. AWS Secrets Manager and IAM for Security**
+
+Security was an important consideration throughout the architecture.
+
+Arthurite incorporated AWS Secrets Manager to store collector and device credentials securely, avoiding the need to place sensitive information directly inside application code or configuration files.
+
+AWS IAM provides access control through appropriately scoped roles for the collector and infrastructure operators.
+
+Together, these services establish a security foundation for managing sensitive credentials and controlling access to the monitoring environment.
+
+## **Project Implementation: From Architecture Design to Proof of Concept**
+
+Arthurite structured the engagement into five phases to ensure that the architecture could be designed, implemented and evaluated progressively.
+
+**Phase 1: Discovery and Design**
+
+The initial phase focused on understanding the existing SolarWinds environment, gathering network requirements and agreeing on the AWS architecture.
+
+Key deliverables included the requirements documentation, architecture design, address planning and VPN connectivity design.
+
+**Phase 2: Connectivity and Collector Deployment**
+
+Arthurite proceeded with building the VPN connectivity and monitoring VPC, alongside deploying the Logstash collector.
+
+The phase established the hybrid connectivity foundation and enabled the collector to receive network data.
+
+**Phase 3: Monitoring and Alerting**
+
+The next phase focused on implementing the CloudWatch monitoring environment.
+
+Arthurite configured the monitoring dashboards, alarms, SNS notifications and Secrets Manager integration to support the required monitoring capabilities.
+
+**Phase 4: Proof-of-Concept Validation**
+
+The completed monitoring architecture was reviewed through a proof-of-concept validation phase.
+
+This phase included reviewing the implementation against the agreed requirements, examining connectivity and failover considerations, and documenting the proof-of-concept results with the customer.
+
+The first four phases were completed between May and June 2025.
+
+**Phase 5: Production Rollout**
+
+The final phase was intended to extend monitoring across all agreed sites, establish operational runbooks, provide training and handover, and eventually decommission the existing SolarWinds platform.
+
+However, this phase had not commenced at the time of the project documentation because of customer budget restrictions. Production rollout was therefore reserved for separate approval and funding.
+
+## **Business and Technical Value**
+
+The engagement established an AWS-based foundation for modernizing enterprise network monitoring.
+
+Although the proof of concept did not represent a completed production migration, it delivered important architectural and operational value.
+
+**Centralized monitoring architecture:** The solution established a design for consolidating network metrics, logs, dashboards and alerts within AWS.
+
+**Secure hybrid connectivity:** AWS Site-to-Site VPN provided the connectivity model for communicating with on-premises network infrastructure through encrypted tunnels.
+
+**Improved monitoring visibility:** Amazon CloudWatch provided a foundation for monitoring device availability, resource utilization, VPN connectivity and network logs.
+
+**Automated alerting:** CloudWatch alarms and Amazon SNS introduced an automated notification approach for communicating monitoring events to the network team.
+
+**Stronger credential management:** AWS Secrets Manager and IAM established a more controlled approach to handling sensitive credentials and infrastructure access.
+
+**A pathway to production modernization:** The completed proof of concept provided an architectural foundation for a future production rollout, subject to customer approval and funding.
+
+## **AWS Competency Alignment**
+
+This engagement demonstrates Arthurite Integrated's capabilities in designing and implementing cloud infrastructure solutions that connect existing enterprise environments with AWS.
+
+The project brought together several important areas of cloud engineering:
+
+- **Hybrid Cloud Connectivity:** Designing secure communication between on-premises infrastructure and AWS using Site-to-Site VPN.
+- **Cloud Infrastructure Architecture:** Establishing VPC networking, routing and security configurations.
+- **Cloud Monitoring and Observability:** Implementing Amazon CloudWatch dashboards, metrics, logs and alarms.
+- **Cloud Security:** Applying IAM access controls, Secrets Manager and network-level security restrictions.
+- **Infrastructure Modernization:** Exploring the transition from traditional on-premises monitoring to an AWS-based monitoring architecture.
+
+By combining these capabilities, Arthurite demonstrated how AWS services can support enterprise network monitoring modernization without requiring organizations to abandon their existing infrastructure immediately.
+
+## **Conclusion: Building a Foundation for Enterprise Network Modernization**
+
+Enterprise network monitoring requires more than simply knowing whether devices are online. Organizations need secure connectivity, centralized visibility, reliable alerting and a clear understanding of their infrastructure's operational health.
+
+Through its engagement with Flour Mills of Nigeria Plc, Arthurite Integrated demonstrated an approach to addressing these requirements using AWS-based hybrid network monitoring.
+
+The proof of concept established the connectivity, collection, monitoring and alerting architecture needed to explore a more centralized monitoring environment.
+
+As organizations continue to modernize their IT infrastructure, hybrid cloud architectures provide an opportunity to extend existing enterprise environments with scalable cloud capabilities.
+
+Arthurite Integrated remains committed to helping organizations design secure, practical and business-focused cloud solutions that support operational efficiency and long-term technology modernization.
+
+**Looking to modernize your enterprise network infrastructure?**
+
+Arthurite Integrated can help your organization explore hybrid cloud connectivity, AWS infrastructure modernization, centralized monitoring and cloud security solutions.
+
+Visit [Arthurite Integrated](https://arthuriteintegrated.com/) to explore our cloud solutions and discuss your next infrastructure modernization project.

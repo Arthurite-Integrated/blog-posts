@@ -1,0 +1,65 @@
+---
+title: "Modernizing Multi-Property Hotel Operations: How Chevan Hospitality Unified 5 Properties with AWS"
+excerpt: "In Nigeria's evolving hospitality sector, managing a multi-property portfolio presents significant operational challenges. Without a single, centralized platform, hotel operators face fragmented guest data, overbooking r…"
+date: 2026-10-03
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**By: Dauda Lawal – Web Developer**
+
+In Nigeria's evolving hospitality sector, managing a multi-property portfolio presents significant operational challenges. Without a single, centralized platform, hotel operators face fragmented guest data, overbooking risks, delayed payment reconciliations, and reduced visibility across locations.
+
+When Chevan Hospitality, a hospitality group operating a portfolio of 147 rooms and serviced apartments across five locations (Lagos, Kano, Enugu, Asaba, and Anambra), sought to scale its operations, it partnered with [Arthurite Integrated](https://arthuriteintegrated.com/).
+
+By architecting and deploying a serverless, cloud-native Hotel Management, Booking, and Payment Integration Platform on Amazon Web Services (AWS), Arthurite helped Chevan eliminate room overbookings, automate payment reconciliation, and expand digital booking channels.
+
+## **The Challenge: Fragmented Operations Across Five Locations**
+
+Prior to the platform deployment, Chevan Hospitality’s five properties operated in operational silos, relying heavily on manual, paper-based, and spreadsheet-driven workflows:
+
+- **Inventory Disconnects & Overbookings:** Managing room availability via spreadsheets and phone calls across 147 rooms led to a **15% to 20% monthly overbooking rate**, consuming 3 to 5 hours of staff time daily in manual updates.
+- **Low Digital Penetration:** Approximately **70% of bookings were processed manually** through phone calls and walk-ins, leaving the group unable to capture online demand or distribute inventory effectively through Online Travel Agencies (OTAs) like Booking.com.
+- **Delayed Payment Reconciliation:** With **60% cash payments** and **30% manual bank transfers**, non-reconciled transactions reached 12%, resulting in roughly **₦2.8 million monthly** in delayed payment confirmations.
+- **Reporting Lags:** Consolidated financial and operational reports were compiled manually in Excel at month-end, creating a **14-day reporting lag** for executive leadership.
+
+These operational frictions resulted in an estimated **₦18.5 million in annual revenue leakage**. Chevan needed a unified platform capable of centralizing room inventory, automating guest messaging and payments, and linking directly with global booking engines.
+
+## **The Architecture: A Serverless Multi-Property Platform on AWS**
+
+Arthurite Integrated designed an event-driven, microservices architecture deployed in the **AWS Africa (Cape Town)** region, accelerated by **Amazon CloudFront** edge points for low-latency performance across Nigeria.
+
+### **![](blob:https://arthuriteintegrated.com/cf53e75a-9c5d-4f26-be15-b24124b6501b)**
+
+### **Core Platform Capabilities**
+
+1. **Centralized Property Management System (PMS):** Serves as a single source of truth for all 147 rooms across the five properties. It tracks dynamic status transitions (Reserved, Occupied, Housekeeping, Maintenance) in real time and automatically updates availability across all channels.
+2. **Bi-Directional Booking.com Integration:** Utilizing the **Booking.com Connectivity Partner API**, **Amazon EventBridge**, and **Amazon SQS**, the platform automatically synchronizes room availability, rates, and incoming reservations in real time, expanding Chevan’s reach to international markets.
+3. **Multi-Gateway Payment Integration:** Integrates **Paystack** (primary) and **Flutterwave** (secondary) to process local debit/credit cards, instant bank transfers, USSD, and international currency payments securely. Transactions update bookings automatically without storing sensitive card details on local servers.
+4. **Automated Financial Reconciliation:** An automated reconciliation engine orchestrated by **AWS Step Functions** runs daily at 02:00 WAT, cross-referencing PMS records, Booking.com reservation feeds, and payment gateway settlement files. Discrepancies are flagged automatically for the finance team.
+5. **Real-Time Executive Analytics:** **Amazon QuickSight** dashboards deliver role-based visibility, enabling property managers and executive leaders to track occupancy, Average Daily Rate (ADR), Revenue Per Available Room (RevPAR), and channel performance across all locations in real time.
+
+## **Measurable Business Outcomes**
+
+By transitioning from siloed, manual workflows to a centralized AWS architecture, Chevan Hospitality transformed its operating model and financial performance:
+
+## **![](blob:https://arthuriteintegrated.com/f0c456fd-72bd-4067-9b33-158143b2a9b1)**
+
+## **AWS Travel & Hospitality Competency Alignment**
+
+This engagement highlights Arthurite Integrated's depth in deploying industry-specific cloud architecture for accommodation providers:
+
+- **Accommodation Management:** Centralized control over geographically distributed properties, room inventories, and housekeeping workflows.
+- **Digital Distribution:** Direct booking web portal integration alongside automated, bi-directional OTA inventory synchronization.
+- **Financial Automation:** Multi-channel payment routing and automated end-of-day ledger reconciliation.
+- **Serverless Scalability:** AWS Lambda and Amazon Aurora infrastructure designed to scale cleanly as Chevan expands its property portfolio.
+
+## **Drive Operational Efficiency with Arthurite Integrated**
+
+Legacy processes and fragmented systems place unnecessary limits on hotel profitability and guest satisfaction.
+
+At **Arthurite Integrated**, we specialize in helping hospitality businesses modernize their core operations, optimize revenue channels, and deliver frictionless guest experiences through modern cloud solutions.
+
+**Looking to modernize your hospitality operations?**
+
+[Contact our Engineering Team today](https://www.google.com/search?q=mailto:info@arthurite.com) to request a consultation and solution architecture demo.

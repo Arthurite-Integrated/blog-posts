@@ -1,0 +1,131 @@
+---
+title: "The Backup Worked. The Restore Didn’t."
+excerpt: "At 9:17 on a Tuesday morning, a company’s main application suddenly stopped responding."
+date: 2026-11-04
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**Author:** Adekunle Kehinde Fisayo
+
+*Web Engineer, Arthurite Integrated*
+
+At 9:17 on a Tuesday morning, a company’s main application suddenly stopped responding.
+
+Customers couldn’t log in. Employees couldn’t access important records. Orders were piling up, and the support team was receiving complaints faster than they could respond.
+
+The technical team wasn’t completely unprepared. They had backups. Daily backups, in fact. The company had invested time and resources in making sure its data was copied regularly.
+
+So the team began the recovery process.
+
+Then the problems started.
+
+The latest backup was older than expected. Some application files were missing. The database restoration took longer than anyone had planned, and nobody was entirely sure whether all the restored components would work together.
+
+The backups existed. But getting the business running again was a different challenge.
+
+This is a problem many organisations overlook: **having a backup does not automatically mean you can recover from a disaster.**
+
+**A backup is only half the story**
+
+Backups are essential. They protect business data against accidental deletion, corruption, hardware failures, and other unexpected events.
+
+But a backup alone doesn’t guarantee that an application, website, or business operation can be restored quickly.
+
+Think about everything that makes an application work: databases, application files, server configurations, network settings, access permissions, and external dependencies.
+
+Restoring one database is not necessarily the same as restoring the entire application.
+
+And even when everything is available, the process could take hours or days if it hasn’t been properly planned and tested.
+
+This is why businesses need to think beyond backup schedules and start planning for disaster recovery.
+
+**Understanding the difference between RPO and RTO**
+
+Two important concepts help businesses determine whether their recovery plans are good enough: Recovery Point Objective (RPO) and Recovery Time Objective (RTO).
+
+RPO answers the question: **How much data can we afford to lose?**
+
+For example, if a business has an RPO of one hour, its recovery strategy should aim to limit data loss to approximately the last hour of activity.
+
+RTO answers a different question: **How long can we afford to be offline?**
+
+If a business has an RTO of two hours, its recovery plan should aim to restore operations within that timeframe.
+
+These targets depend on the business. An online payment platform may have very different recovery requirements from a small company website.
+
+The important thing is to define these expectations before an incident happens, not while customers are waiting for the service to return.
+
+**How AWS helps businesses prepare for recovery**
+
+AWS provides several services that can help organisations protect their data and plan for unexpected disruptions.
+
+**AWS Backup: Managing backups from one place**
+
+Managing backups across multiple AWS services can become complicated, especially as infrastructure grows.
+
+AWS Backup provides a centralised way to configure, manage, and monitor backups for supported AWS services. Businesses can establish backup policies, automate schedules, and manage backup retention.
+
+It also supports copying backups across AWS accounts and Regions, helping organisations build stronger recovery strategies.
+
+Instead of relying on someone to remember to back up every important resource, businesses can establish consistent backup policies and monitor whether those policies are being followed.
+
+**AWS Elastic Disaster Recovery: Getting applications back online**
+
+Sometimes, restoring data isn’t enough. A business needs to recover an entire application environment.
+
+AWS Elastic Disaster Recovery helps organisations recover applications running on supported on-premises, cloud, or AWS infrastructure by continuously replicating source servers to AWS.
+
+When a disruption occurs, businesses can initiate recovery instances in AWS and work towards restoring their applications.
+
+This is particularly useful for organisations that need a more structured approach to recovering critical systems without maintaining a complete duplicate production environment at all times.
+
+**Amazon S3 Object Lock: Protecting backups from deletion**
+
+Imagine an organisation has reliable backups, but an attacker gains access to its environment and attempts to delete them.
+
+That backup strategy suddenly becomes much less useful.
+
+Amazon S3 Object Lock helps protect objects from being deleted or overwritten for a defined retention period or indefinitely under a legal hold. It uses a write-once-read-many (WORM) model and requires S3 Versioning.
+
+For businesses storing important backup data in Amazon S3, this adds another layer of protection against accidental deletion and certain malicious actions.
+
+**Multi-AZ and cross-Region strategies: Preparing for infrastructure failures**
+
+AWS also provides infrastructure options that help businesses improve availability and resilience.
+
+For example, deploying an application across multiple Availability Zones can help it remain available when one Availability Zone experiences a disruption.
+
+For broader disaster recovery requirements, businesses can consider copying backups to another AWS Region or designing recovery environments in a separate Region.
+
+However, high availability and disaster recovery are not interchangeable. Multi-AZ deployments can help reduce downtime, but they do not replace independent backups or a properly tested recovery plan.
+
+**The test that matters most**
+
+There is one question every organisation should ask:
+
+**When was the last time we actually tested our backups?**
+
+A backup job reporting success doesn’t necessarily prove that the application can be restored successfully.
+
+Businesses should regularly test restoration, verify that recovered data is usable, check application dependencies, and measure how long recovery takes.
+
+They should also review access permissions, backup retention policies, and whether backup copies are protected from unauthorised changes or deletion.
+
+These exercises help identify problems before a real incident exposes them.
+
+A disaster recovery plan should not exist only in a document. It should be something the technical team has practised and understands.
+
+**Don’t wait until recovery becomes an emergency**
+
+The company from our opening story eventually restored its application. But the downtime cost it customers, revenue, and confidence.
+
+Its biggest mistake wasn’t failing to create backups. It was assuming that creating backups was the same as being prepared for a disaster.
+
+Businesses using AWS should take a more deliberate approach: define recovery objectives, automate backups, protect critical data, plan for infrastructure failures, and regularly test recovery procedures.
+
+At **Arthurite Integrated**, we help businesses design and manage AWS environments with resilience in mind. From backup strategies and infrastructure architecture to disaster recovery planning, we help organisations prepare for unexpected disruptions and build systems they can confidently recover.
+
+Because when something goes wrong, the question shouldn’t be whether a backup exists.
+
+It should be whether your business can get back to work.

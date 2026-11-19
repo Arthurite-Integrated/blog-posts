@@ -1,0 +1,142 @@
+---
+title: "The Developer Left. Nobody Knew How the Infrastructure Worked."
+excerpt: "When the company hired its first developer, everything was simple."
+date: 2026-11-11
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**Author:** Adekunle Kehinde Fisayo  
+*Web Engineer, Arthurite Integrated*
+
+When the company hired its first developer, everything was simple.
+
+The developer created an AWS environment, configured the servers, connected the database, set up networking, and deployed the application. As the business grew, more resources were added. A few configuration changes were made along the way, and some deployment settings were adjusted to keep everything running.
+
+It worked.
+
+There was just one problem: almost everything existed in the developer's head.
+
+Nobody had a complete record of how the infrastructure was configured. There were no reusable templates, and some changes had been made manually through the AWS Management Console.
+
+Then the developer left.
+
+A few months later, the company needed to recreate its environment for a new application. The remaining team tried to figure out how the original infrastructure had been built.
+
+Which security group rules were required? Why was a particular server configured that way? Which resources depended on one another? Had someone changed a setting manually?
+
+What should have been a straightforward deployment became a guessing game.
+
+The company had an AWS environment, but it didn't have a reliable way to reproduce it.
+
+This is one of the problems **Infrastructure as Code (IaC)** was designed to solve.
+
+## Your infrastructure should not live in someone's memory
+
+Traditionally, teams configure infrastructure manually. Someone logs into a cloud console, creates a server, configures networking, sets permissions, and connects the necessary services.
+
+This approach can work, especially when an environment is small.
+
+But as infrastructure grows, manual configuration becomes difficult to manage. Different team members may configure similar resources differently. Important settings can go undocumented, and recreating an environment becomes dependent on whoever remembers how everything was originally set up.
+
+Infrastructure as Code changes this approach.
+
+Instead of relying entirely on manual configuration, teams define their infrastructure in files that describe the resources they need and how those resources should be configured.
+
+Think of it as keeping the instructions for building your infrastructure alongside your application code.
+
+Need another environment? Use the same definitions. Need to understand a configuration change? Review the code. Need to roll out an update? Apply the revised infrastructure definition.
+
+Your infrastructure becomes something the team can document, review, version, and reproduce.
+
+## How AWS makes Infrastructure as Code possible
+
+AWS provides several tools that help teams define, deploy, and manage infrastructure consistently.
+
+**AWS CloudFormation: Describe your infrastructure with templates**
+
+At the centre of AWS's Infrastructure as Code ecosystem is AWS CloudFormation.
+
+CloudFormation allows developers to describe AWS resources in templates, using YAML or JSON. These templates can define resources such as EC2 instances, S3 buckets, databases, security groups, and networking components.
+
+CloudFormation uses these templates to provision and manage the resources as a stack.
+
+For example, rather than manually creating a database, configuring its settings, and connecting it to an application environment, a team can define the required resources and configurations in a template.
+
+When the template is deployed, CloudFormation manages the creation and updating of the resources.
+
+The real advantage is consistency. The same infrastructure definition can be reused across development, testing, and production environments, with appropriate configuration differences.
+
+**AWS CDK: Infrastructure using familiar programming languages**
+
+Some developers prefer writing infrastructure definitions using programming languages rather than working directly with YAML or JSON templates.
+
+That's where the AWS Cloud Development Kit (AWS CDK) comes in.
+
+AWS CDK allows developers to define cloud infrastructure using supported programming languages such as TypeScript, Python, Java, and C#.
+
+For example, a developer can define an S3 bucket or an application environment using familiar programming constructs.
+
+The CDK then synthesises these definitions into AWS CloudFormation templates, which CloudFormation uses to provision the infrastructure.
+
+This makes it possible to apply software development practices such as reusable components, abstraction, and automated testing to infrastructure management.
+
+**AWS CodePipeline: Automating infrastructure deployments**
+
+Writing infrastructure code is important, but teams also need a reliable way to deploy changes.
+
+AWS CodePipeline helps automate continuous delivery workflows. It can connect source repositories, build processes, and deployment stages into a pipeline.
+
+A team could store its CloudFormation templates or CDK application in a source repository. When a change is made, a pipeline can run validation and build steps before deploying the updated infrastructure through CloudFormation.
+
+Teams can also introduce approval stages before changes reach production.
+
+This reduces the need for someone to manually repeat deployment steps and makes infrastructure updates easier to manage.
+
+**CloudFormation Drift Detection: Finding changes nobody documented**
+
+There is another problem that can occur even when a team uses Infrastructure as Code.
+
+Someone might log into the AWS Management Console and manually change a resource outside the normal deployment process.
+
+Over time, the actual infrastructure may no longer match what is described in the original template.
+
+This is known as configuration drift.
+
+AWS CloudFormation provides drift detection to help identify differences between supported resource configurations and their expected template definitions.
+
+For example, if a security group is manually modified after deployment, drift detection can help identify that its actual configuration differs from the template.
+
+It is worth noting that drift detection does not cover every possible resource property or configuration change. Teams should still use appropriate monitoring, reviews, and security controls.
+
+## What changes when infrastructure becomes code?
+
+Consider the company from our opening story.
+
+If its infrastructure had been defined using CloudFormation or AWS CDK, the team would have had a documented starting point for rebuilding its environment.
+
+The infrastructure definitions could have been stored in a version-controlled repository, allowing developers to review changes and understand how the environment evolved.
+
+CodePipeline could help automate deployment workflows, while CloudFormation drift detection could help identify certain manual changes that cause the deployed environment to differ from its templates.
+
+A new developer joining the team would no longer have to depend entirely on conversations with the person who originally built the infrastructure.
+
+They would have something concrete to work with.
+
+Of course, Infrastructure as Code does not eliminate the need for documentation, security reviews, or technical knowledge. Teams still need to manage secrets properly, control deployment permissions, review infrastructure changes, and understand the resources they are provisioning.
+
+But it significantly reduces the risk of infrastructure knowledge becoming trapped with one individual.
+
+## Build infrastructure your team can maintain
+
+Cloud infrastructure should be designed for more than the person who initially creates it.
+
+As businesses grow, their AWS environments become more complex. New developers join, applications expand, and infrastructure needs to evolve.
+
+Relying on manual configurations and undocumented changes makes that growth harder to manage.
+
+Infrastructure as Code provides a more structured approach. With AWS CloudFormation, AWS CDK, and automated deployment workflows, businesses can make their infrastructure easier to reproduce, review, and maintain.
+
+At **Arthurite Integrated**, we help businesses build and manage AWS environments with an emphasis on scalability, consistency, and maintainability. Whether you're setting up new infrastructure or improving an existing environment, having a clear and repeatable deployment process is an important step towards building a cloud environment your entire team can manage.
+
+Because your infrastructure should remain understandable, manageable, and reproducible — even after the person who built it has moved on.

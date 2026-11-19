@@ -1,0 +1,65 @@
+---
+title: "How Astevon Logistics Modernized Ground Transportation with AWS"
+excerpt: "In West Africa’s fast-moving corporate travel sector, reliable ground transportation is a critical link in the logistics chain. Managing airport transfers, inter-city travel, and corporate pickup schedules across multipl…"
+date: 2026-10-03
+author: "Arthurite Integrated"
+category: "Cloud"
+featured: false
+---
+**By: Dauda Lawal – Web Developer**
+
+In West Africa’s fast-moving corporate travel sector, reliable ground transportation is a critical link in the logistics chain. Managing airport transfers, inter-city travel, and corporate pickup schedules across multiple metropolitan centers requires precise timing, instant communication, and total fleet visibility.
+
+When **Astevon Logistics**, a ground transportation leader coordinating services across major Nigerian airports looked to scale its operations beyond manual dispatching, it partnered with **Arthurite Integrated**.
+
+By architecting and deploying a serverless, cloud-native Airport Transfer and Real-Time Ground Transportation Platform on Amazon Web Services (AWS), Arthurite helped Astevon transition from manual phone-and-chat dispatching to a fully digitized, GPS-tracked logistics system.
+
+## **The Challenge: Managing Fleet Scale Without Real-Time Visibility**
+
+Operating an active fleet of 25 vehicles, including sedans, SUVs, and minibuses, handling roughly 480 monthly trips across four major hubs (Lagos, Abuja, Port Harcourt, and Kano), Astevon faced significant operational friction:
+
+- **Manual Dispatching Overhead:** Trip coordination relied heavily on phone calls and WhatsApp groups, taking 12 to 15 minutes per booking and introducing assignment confusion on nearly 8% of trips.
+- **Zero Vehicle Visibility:** Without real-time tracking, coordinators couldn't verify driver locations, leading to passenger anxiety and a 22% rate of "where is my driver?" complaints.
+- **High Idle-Time Costs:** Unsynchronized airport arrivals and flight delays forced drivers to idle at terminals for 45 to 90 minutes on average, adding roughly **₦850,000 monthly** in unnecessary idle-time costs.
+- **Revenue Leakage & Invoicing Lags:** Paper logs and delayed spreadsheet records caused a 3- to 5-day lag in trip recording, resulting in **₦1.2 million per month** in unbilled or under-billed trips.
+
+Combined, these operational bottlenecks resulted in an estimated **₦28.4 million in annual operational inefficiency costs**. To onboard new corporate clients and expand nationwide, Astevon required an event-driven system capable of automated dispatching, instant tracking, and seamless passenger communication.
+
+## **The AWS Solution: Event-Driven Cloud Infrastructure for Intelligent Logistics**
+
+Arthurite Integrated engineered an event-driven, microservices architecture deployed in the **AWS Africa (Cape Town)** region, integrated with **Amazon CloudFront** for low-latency responsiveness across Nigeria.
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/10/image-5-1024x512.png)
+
+### **Key Engineering Capabilities**
+
+1. **Amazon Location Service & Geofencing:** Real-time GPS trackers maintain 10-second updates for active vehicles. Automated geofences trigger operational workflows when a vehicle hits key zones, such as the **2 km Airport Arrival Zone** (triggering passenger updates) or the **200 m Pickup Zone** (starting the wait-time counter).
+2. **Dedicated Driver Mobile Application:** Built with React Native, the mobile app delivers instantaneous push notifications for new trip assignments, offline-first queuing for status updates, deep-linked navigation, and background GPS location streaming.
+3. **Live Command-Center Dashboard:** A web dashboard provides coordinators with live map visualization, an active trip board, automated alerts, and real-time vehicle status indicators updated via WebSocket APIs.
+4. **Automated Multi-Channel Communication:** Integrating **Amazon SNS** with local gateway provider **Termii**, the platform sends automated SMS updates at 8 critical trip milestones, from driver confirmation to pickup notifications, eliminating the need for manual status calls.
+5. **Real-Time Logistics Intelligence:** **Amazon QuickSight** dashboards analyze location logs, trip durations, route performance, and driver scorecards, converting operational data into actionable fleet optimization insights.
+
+## **Quantifiable Impact & Target Outcomes**
+
+By shifting to a modern cloud backend on AWS, Astevon Logistics established a foundation designed to scale seamlessly from 25 to over 100 vehicles across Nigerian airports:
+
+![](https://arthuriteintegrated.com/wp-content/uploads/2026/10/image-4-1024x508.png)
+
+## **AWS Travel & Hospitality Competency Alignment**
+
+This deployment reinforces Arthurite Integrated’s specialized capability across the **AWS Travel & Hospitality** domain:
+
+- **Ground Transportation Management:** End-to-end digitization of airport transfer lifecycles and driver dispatches.
+- **Real-Time Asset Tracking:** High-precision tracking utilizing Amazon Location Service and geofencing triggers.
+- **Connected Travel Experiences:** Multi-channel passenger engagement providing real-time driver ETA updates and live tracking links.
+- **Event-Driven Operational Automation:** Orchestrated backend workflows using AWS Lambda and Step Functions to process status shifts automatically.
+
+## **Transform Your Ground Logistics with Arthurite Integrated**
+
+Legacy dispatch systems, lack of location visibility, and manual coordination restrict fleet growth and lower service quality.
+
+At **Arthurite Integrated**, we build custom, cloud-native platforms that empower transportation providers to automate dispatches, lower operating costs, and deliver superior travel experiences.
+
+**Ready to modernize your fleet operations?**
+
+[Contact our Engineering Team](mailto:info@arthurite.com) to schedule a consultation and platform demonstration.

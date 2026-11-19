@@ -4,6 +4,7 @@ excerpt: "An industrial conglomerate does not fail because it lacks demand. It f
 date: 2026-11-15
 author: "Arthurite Integrated"
 category: "Cloud"
+cover: from-four-locations-to-one-conversation-how-dozzy-group-replaced-manual-invoicing-cover.png
 featured: false
 ---
 An industrial conglomerate does not fail because it lacks demand. It fails because the administrative machinery between the customer and the order cannot keep up with the demand it already has.
@@ -83,7 +84,7 @@ The architecture brings together the following AWS services:
 - **AWS WAF:** Protects the public edge with managed rule groups and a per-IP rate limit.
 - **AWS KMS:** Supplies a customer-managed key, with rotation enabled, backing bucket-level encryption on every object.
 
-![](https://arthuriteintegrated.com/wp-content/uploads/2026/11/Oldnavi-AWS-Reference-Architecture-1-1000x1024.png)
+![](../../../../images/Oldnavi-AWS-Reference-Architecture-1-1000x1024-2f16d0dd.png)
 
 *Suggested architecture flow: CloudFront → Lex V2 → Lambda fulfilment → Catalogue validation → Invoice generator → S3 archive → Expiring download link, with Bedrock knowledge grounding and CloudWatch, WAF, and KMS security controls.*
 
